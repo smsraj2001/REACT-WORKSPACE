@@ -1,0 +1,73 @@
+Component:
+----------
+
+A component is a piece of ui.
+        react --> facebook
+            version 16, 17, 18,.....
+
+We have 2 types of components:
+1. Class component ---> stateful component (It can manage the state)(data handling, life cycle methods, event handling, etc.)
+2. Functional component ---> stateless component (only ui) (It cannot manage the state)
+    Until react 16 function component is stateless component, but from react 16.8 function component is stateful component.
+
+From React v16 onwards -> functional component also can manage the state.
+
+============================================================================================================
+
+Props:
+------
+
+- Props means property
+- Using props, we can pass the data from parent component to child component.
+- Props values are read-only.
+- Props Works:
+    - Props works for html : attributes
+    - Props works for react : functional parameters
+- Props are immutable.
+
+============================================================================================================
+- In JSX we need to use className instead of class to apply the css.
+- In JSX to call class selector we need to use className instead of class.
+
+- className should be unique across multiple files.
+
+To install bootstrap in react:
+------------------------------
+- npm i bootstrap : to install bootstrap
+- Paste the below line in index.js file
+    import 'bootstrap/dist/css/bootstrap.css';
+
+In JSX while calling the events we need to call in paranthesis.
+============================================================================================================
+
+From React 16 onwards react introduced hooks concept.
+1. useState hooks
+------------------
+- using useState hook we can manage the data in functional component.
+- It can manage the state in functional component.
+
+const{count, setCount} = React.useState(0)
+- count will return the value
+- setCount will return the function to update the value.
+
+Bootstrap Cards:
+----------------
+- To create the cards in bootstrap we need to use the below code.
+    <div className="card" style={{width: "18rem"}}>
+        <img src="..." className="card-img-top" alt="..."/>
+        <div className="card-body">
+            <h5 className="card-title">Card title</h5>
+            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" className="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+====================================================================================================================
+Gold rate Calculator
+--------------------
+- Weight of the Gold 
+- Gold Price
+- Making charges in percentage
+- tax
+====================================================================================================================
+Bill of material

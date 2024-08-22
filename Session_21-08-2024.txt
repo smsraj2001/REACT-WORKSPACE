@@ -1,0 +1,77 @@
+https://react.dev/learn
+
+Nowadays we are transitioning from multi-page website to single page application. (SPA)
+Multi-page website will load multiple times for different pages, but SPA will load only once and it will load the data dynamically.
+
+Commands:
+---------
+npx create-react-app myfirstapp (It comes with boilerplate code and project structure.)
+
+=======================================================================================================================
+
+React JS:
+---------
+- By using react we can create a single page application. (SPA)
+- ReactJS is a LIBRARY for building user interfaces.
+- ReactJS is developed by Facebook.
+- ReactJS is an open source library.
+- ReactNative is a framework for building mobile applications.
+- Main feature of ReactJS is Virtual DOM. (Document Object Model)
+- React is component based library.
+- React UI is built with a collection of components. (header component, footer component, aside component, section component, etc.)
+- If any change happens in the component, then only that component will be re-loaded, not the entire page.
+
+
+What is framework?
+------------------
+- Framework is a collection of libraries which are readymade.
+- AngualrJS is a framework, but ReactJS is a library.
+
+Difference between library and framework:
+----------------------------------------
+
+Library:                                               Framework:
+--------                                               ----------
+- Library is a collection of functions.                - Framework is a collection of libraries.
+- We can use the functions of library whenever we      - We can use the libraries of framework whenever
+  want.                                                   we want.
+- Library is small in size.                            - Framework is large in size.
+- Example: ReactJS is a library.                        - Example: AngularJS is a framework.
+
+=======================================================================================================================
+Advantages of React JS:
+-----------------------
+
+#1 Effortless Maintenance
+#2 Fast Rendering
+#3 Search Engine Friendly
+#4 Reliable Development Tools
+#5 Redux Facility
+#6 Offers Mobile Application Development
+#7 Stable and Streamline Code
+#8 Ample Community Support
+#9 Comes with JSX
+#10 Component Reusability
+
+=======================================================================================================================
+jsx -> Combination of HTML + javascript code.
+
+In a jsx,
+- a component is a function which returns a html view.
+- a componen t can return only one parent element.
+- name of the component should start with capital letter.
+
+
+rfce -> shortcut for functional component.
+rfc -> shortcut for functional component.
+rfcea -> shortcut for functional component with arrow function.
+
+If using default export then while importing dont enclose in curly braces.
+If giving export in the function then while importing enclose in curly braces.
+
+
+React Flow:
+First index.html, JS, App.js
+
+npm i --legacy-peer-deps
+npm install --save-dev ajv@^7 --legacy-peer-deps
