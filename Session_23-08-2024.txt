@@ -1,0 +1,24 @@
+react js:
+---------
+
+    jsx:
+    ----
+    html + javascript = jsx
+    <>       {}            : These tags differentiate html and javascript in jsx
+
+conditional rendering:
+----------------------
+- Based on the condition we can render the component and display the view accordingly.
+
+
+==============================================================================================================
+component life cycle:
+---------------------
+- Every component has its own life cycle.
+- The life cycle of a component is divided into 4 phases.
+    1. Mounting: When an instance of a component is being created and inserted into the DOM.
+    2. Updating: When a component is being re-rendered as a result of changes to either its props or state.
+    3. Unmounting: When a component is being removed from the DOM.
+    4. Error Handling: When there is an error during rendering, in a lifecycle method, or in the constructor of any child component.
+
+==============================================================================================================
