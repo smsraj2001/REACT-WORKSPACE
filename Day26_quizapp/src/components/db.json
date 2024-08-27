@@ -1,0 +1,114 @@
+{
+  "quizData": [
+    {
+      "id": 1,
+      "question": "What does the 'TVS' in TVS Motors originally stand for?",
+      "options": [
+        "Thiruvallur Vehicle Services",
+        "Thirukkurungudi Vengaram Sundaram",
+        "Tamilnadu Vehicle Systems",
+        "Thiru Vengadam Sundaram"
+      ],
+      "correctAnswer": "Thirukkurungudi Vengaram Sundaram"
+    },
+    {
+      "id": 2,
+      "question": "TVS Motors’ emphasis on environmental responsibility is best represented by which of the following values?",
+      "options": [
+        "Sustainability",
+        "Efficiency",
+        "Reliability",
+        "Customer Satisfaction"
+      ],
+      "correctAnswer": "Sustainability"
+    },
+    {
+      "id": 3,
+      "question": "Which TVS scooter model was updated with a Bluetooth-enabled instrument cluster and connectivity features?",
+      "options": [
+        "TVS Wego",
+        "TVS Jupiter",
+        "TVS Ntorq",
+        "TVS Scooty"
+      ],
+      "correctAnswer": "TVS Ntorq"
+    },
+    {
+      "id": 4,
+      "question": "What is the name of TVS Motors’ advanced braking technology that improves safety?",
+      "options": [
+        "Anti-lock Braking System (ABS)",
+        "Integrated Braking System (IBS)",
+        "Synchronized Braking Technology (SBT)",
+        "Enhanced Braking System (EBS)"
+      ],
+      "correctAnswer": "Integrated Braking System (IBS)"
+    },
+    {
+      "id": 5,
+      "question": "What is the approximate market share of TVS Motors in the Indian two-wheeler market as of 2024?",
+      "options": [
+        "10%",
+        "15%",
+        "20%",
+        "25%"
+      ],
+      "correctAnswer": "15%"
+    },
+    {
+      "id": 6,
+      "question": "In 2015, TVS Motors acquired the rights to distribute and manufacture which international brand’s motorcycles in India?",
+      "options": [
+        "Norton",
+        "BMW",
+        "Harley-Davidson",
+        "Triumph"
+      ],
+      "correctAnswer": "BMW"
+    },
+    {
+      "id": 7,
+      "question": "Which TVS scooter model was introduced in 2018 with a focus on the youth market, featuring a sportier design and advanced features?",
+      "options": [
+        "TVS Ntorq 125",
+        "TVS Wego",
+        "TVS Jupiter Grande",
+        "TVS Scooty Zest"
+      ],
+      "correctAnswer": "TVS Ntorq 125"
+    },
+    {
+      "id": 8,
+      "question": "What is the primary mission of Srinivasan Services Trust (SST)?",
+      "options": [
+        "To promote technological innovation",
+        "To provide educational and healthcare services",
+        "To support corporate social responsibility initiatives",
+        "To manage TVS Motor’s operations"
+      ],
+      "correctAnswer": "To provide educational and healthcare services"
+    },
+    {
+      "id": 9,
+      "question": "Where does TVS Motors rank in terms of two-wheeler manufacturers in India by market share?",
+      "options": [
+        "First",
+        "Second",
+        "Third",
+        "Fourth"
+      ],
+      "correctAnswer": "Third"
+    },
+    {
+      "id": 10,
+      "question": "Which region is a major focus for TVS Motors' export strategy?",
+      "options": [
+        "North America",
+        "South America",
+        "Africa and Southeast Asia",
+        "Europe"
+      ],
+      "correctAnswer": "Africa and Southeast Asia"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+npm create vite@latest
+
+Select ReactJS and Javascript and remember to use ReactsJS and Javascript.
+
+npm i
+npm run dev
+================================================================================
+
+React Routing:
+--------------
+- By using routing we can navigate to different components.
+  NOTE:
+  -----
+  - When we create react projects, by default routing will not be available.
+
+  Steps:
+  --------
+    1. Create a react project using create-react-app
+
+    2. Install all the dependencies. 
+        npm install react-router-dom@6 OR npm install react-router-dom@latest
+
+    3. Create the necessary components:
+      Eg:
+      ---
+        Home
+        AboutUs
+        ContactUs
+
+    4. In index.js file:
+
+        BrowserRouter
+        ----------------
+            <BrowserRouter>
+            <App />
+            </BrowserRouter>
+
+    5. Provide the Route Configuration:
+       ---------------------------------
+       Write the route configuration in App.js (Root component)
+       <Routes>
+        <Route path = "/" element = {<Home />} /> {/* Default path */}
+        {/* In the URL append /home, then the component will come. */}
+        {/* <Route path = "/home" element = {<Home />} />  */}
+        <Route path = "/contactus" element = {<ContactUs />} />
+        <Route path = "/aboutus" element = {<AboutUs />} />
+      </Routes>
+
+    6. Call the routes in components:-
+    ----------------------------------
+
+    <Link to = "aboutus">About Us</Link>
+    <Link to = "contactus">Contact Us</Link>
+
+=============================================================================================================
+Hooks:
+------
+    Hooks allow function components to have access to state and other React features. Because of this, class components 
+    are generally no longer needed.
+
+    After the introduction of hooks, function component also behave as class components.
+
+    Different types of hooks are available:
+    ---------------------------------------
+    1. useState
+    2. useEffect
+    3. useContext
+    4. useRef
+
+    useEffect:     (You need to be aware of lifecycle of react components)
+    -----------
+    If you’re familiar with React class lifecycle methods, you can think of useEffect Hook as componentDidMount, componentDidUpdate, and componentWillUnmount combined.
+
+    It is used to perform some side effect logic
+                        side effect => perform some logic outside the react.
+
+        Syntax:
+        -------
+            useEffect( param1, param2)
+                        |            |
+                        v            V
+                    call back    Dependency Array
+                    function
+
+        const Counter = () => {
+        const[num1, setNum1] = useState(0);
+        const[num2, setNum2] = useState(0);
+        useEffect( () => {
+                    setTimeout(() => {
+                        setNum1( (num1) => num1 + 1)
+                        setNum2( (num2) => num2 + 1)
+                    }, 1000)
+                    
+
+        }, [num1, num2] )};
+
+        []: only 1 time loading
+
+        npm install axios
