@@ -1,0 +1,7 @@
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install react-bootstrap
+
+import Button from '@mui/material/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';

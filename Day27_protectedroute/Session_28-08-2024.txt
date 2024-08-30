@@ -1,0 +1,11 @@
+React Routing:
+---------------
+
+    Routing Configuration:
+    ----------------------
+    <Routes>
+        <Route path = "" element = "{<Home />}">
+    </Routes>
+
+    By default all routes are public,
+    https://

@@ -1,0 +1,25 @@
+{
+  "Users": [
+    {
+      "email": "sutharsanraj2001@gmail.com",
+      "username": "sutharsan",
+      "password": "123",
+      "role": "admin",
+      "id": "ecf5"
+    },
+    {
+      "email": "maanu@gmail.com",
+      "username": "maanu",
+      "password": "123",
+      "role": "user",
+      "id": "d3b9"
+    },
+    {
+      "id": "402d",
+      "email": "subramanian@gmail.com",
+      "username": "subbu",
+      "password": "123",
+      "role": "user"
+    }
+  ]
+}
