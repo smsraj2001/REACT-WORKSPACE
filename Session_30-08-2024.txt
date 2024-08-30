@@ -1,0 +1,190 @@
+React So Far
+-------------
+
+- Single Page Application
+- Components
+- State
+- Props
+- Types of components
+- Hooks
+- Life of components (Component Loading and Unloading)
+- Form handling
+- Events
+- List in React
+- Conditional Rendering
+- Routing
+- Protected Route
+
+---------------------------------------------------------------------------------------------------------
+
+React State Management:
+-----------------------
+
+----------------------------------------------------------------------------------------------------------
+
+Use Context:
+-------------
+    To manage the global and pass the data to any component with props.
+
+    createContext(): Create the context object.
+    useContext(): By using useContext we can access the value
+
+Task:
+-----
+    3 components
+
+    counter
+
+    Speed =>
+
+    Increment Component
+    Decrement Component
+    Show Component
+
+    Another Solution:
+
+    App.js
+ 
+import logo from './logo.svg';
+import './App.css';
+import { createContext, useState } from 'react';
+import Increment from './components/Increment';
+import Decrement from './components/Decrement';
+import Show from './components/Show';
+ 
+export const UserContext=createContext(); //context object for global store
+ 
+function App() {
+ 
+  const [counter,setCounter]=useState(0);
+ 
+  const increment = () => {
+    return setCounter(counter + 1);
+}
+ 
+ 
+const decrement = () => {
+    return setCounter(counter - 1);
+}
+ 
+  return (
+    <div className="App">
+     
+      <UserContext.Provider value={{counter,increment,decrement}}>
+        <Increment/>
+        <Decrement/>
+        <Show/>
+ 
+      </UserContext.Provider>
+    </div>
+  );
+}
+ 
+export default App;
+ 
+(src/components/Increment.js)
+ 
+ 
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+const Increment = () => {
+ 
+  const {counter, increment, decrement} = useContext(UserContext)
+ 
+  return (
+<div>
+<button onClick={increment}> Increment </button>
+</div>
+  )
+}
+ 
+export default Increment
+ 
+(src/components/Decrement.js)
+ 
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+const Decrement = () => {
+ 
+      const {counter, increment, decrement} = useContext(UserContext)
+  return (
+<div>
+<button onClick={decrement}> Decrement </button>
+</div>
+ 
+  )
+}
+ 
+export default Decrement
+ 
+(src/components/show.js)
+ 
+ 
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+const Show = () => {
+    const {counter, increment, decrement} = useContext(UserContext)
+  return (
+<div>{counter}</div>
+  )
+}
+ 
+export default Show
+ 
+-------------------------------------------------------------------------------------------------------
+Redux:
+-------
+- Redux is a state management library.
+- It manages the global state of the application.
+- Redux can be used with any other javascript library (like Angular, React, Vue.js)
+
+Difefrence between useContext and redux:
+----------------------------------------
+
+    useContext:                        vs                 Redux
+    -----------                       ------              ------
+
+  -> react Library                                       -> External library
+  -> Simple Application                                  -> Complex Application
+  -> Less Boiler plate Code                              -> Set up boiler plate code is more
+  -> Easy                                                -> Complex
+
+  ==================================================================================================
+  State
+  ----------
+  It means the  value, which will change over time.
+  ==================================================================================================
+
+Understanding the components of redux:
+--------------------------------------
+Eg: Sugarcane juice
+
+Action ----> What actions need to be performed
+            Add, sub, Mul
+Reducer ----> It will update the value
+            Based on the actions it will do the operations.
+            Eg:
+            ---
+              If the action is ADD ---> it will perform addition operations.
+              If the action is SUB ---> then it will perform subtraction
+Store ----> It is a global store, it will store the value.
+
+======================================================================================================
+Architecture of Redux:
+----------------------
+
+=======================================================================================================
+Steps:
+------
+- Create react project
+- Add redux library
+    npm i redux react-redux
+Note: Redux is not a jsx file.
+- Project Structure
+  - src
+    |-components
+      |-Counter.jsx
+    |-redux
+      |-actions
+      |-reducers
+      |-store.js
