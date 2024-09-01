@@ -1,0 +1,610 @@
+==================== App.js ====================
+
+import React, { useEffect, useState } from 'react';
+import AppLayout from './components/AppLayout';
+import Question from './components/Question';
+import Sidebar from './components/Sidebar';
+import Result from './components/Result';
+import LoginPage from './components/LoginPage';
+import { Route, Routes, useLocation } from "react-router-dom";
+
+function App() {
+  const [quizData, setQuizData] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [showResult, setShowResult] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      // Reset state when navigating to the login page
+      setAnswers({});
+      setShowResult(false);
+    }
+  }, [location.pathname]);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8000/quizData')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setQuizData(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching quiz data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleOptionChange = (questionId, selectedOption) => {
+    setAnswers({
+      ...answers,
+      [questionId]: selectedOption,
+    });
+  };
+
+  const handleSubmit = () => {
+    setShowResult(true);
+  };
+
+  const calculateScore = () => {
+    if (quizData.length === 0) return 0;
+
+    return Object.keys(answers).reduce((score, questionId) => {
+      const question = quizData.find(q => q.id === questionId);
+
+      if (question) {
+        const userAnswer = (answers[questionId] || '').trim().toLowerCase();
+        const correctAnswer = (question.correctAnswer || '').trim().toLowerCase();
+
+        if (userAnswer === correctAnswer) {
+          return score + 1;
+        }
+      }
+      return score;
+    }, 0);
+  };
+
+  const score = calculateScore();
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <div className="container mt-5">
+          <h2>Loading quiz data...</h2>
+        </div>
+      </AppLayout>
+    );
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/quiz" element={
+        <AppLayout>
+          {!showResult ? (
+            <div className="d-flex flex-grow-1">
+              <main className="flex-grow-1 pe-5">
+                <div className="container mt-3">
+                  {quizData.map((question, index) => (
+                    <Question
+                      key={question.id}
+                      questionData={question}
+                      selectedOption={answers[question.id]}
+                      handleOptionChange={handleOptionChange}
+                      questionNumber={index + 1} // Pass question number
+                    />
+                  ))}
+                </div>
+                <div className="text-center mt-4">
+                  <button
+                    className="btn btn-success"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </main>
+              <Sidebar quizData={quizData} handleSubmit={handleSubmit} />
+            </div>
+          ) : (
+            <div className="container mt-5">
+              <Result
+                score={score}
+                total={quizData.length}
+                correctAnswers={quizData} // Pass correct answers
+                userAnswers={answers} // Pass user answers
+              />
+            </div>
+          )}
+        </AppLayout>
+      } />
+
+    </Routes>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/AppLayout.jsx ====================
+
+import React from 'react';
+import HeaderComponent from './HeaderComponent';
+import FooterComponent from './FooterComponent';
+
+function AppLayout({ children }) {
+  return (
+    <div className="d-flex flex-column min-vh-100">
+      <HeaderComponent />
+      <div className="d-flex flex-grow-1">
+        <main className="flex-grow-1 p-3 pe-5"> {/* Add padding end to make space for Sidebar */}
+          {children}
+        </main>
+        <div className="position-relative"> {/* Container for the Sidebar */}
+        </div>
+      </div>
+      <FooterComponent />
+    </div>
+  );
+}
+
+export default AppLayout;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/CountdownClock.jsx ====================
+
+import React, { useState, useEffect } from 'react';
+
+const CountdownClock = ({ duration, onTimeUp }) => {
+  const [timeLeft, setTimeLeft] = useState(duration);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      onTimeUp();
+      return;
+    }
+
+    const timerId = setInterval(() => {
+      setTimeLeft(prevTime => prevTime - 1);
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [timeLeft, onTimeUp]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  return (
+    <div className="countdown-clock">
+      <p>{formatTime(timeLeft)}</p>
+    </div>
+  );
+};
+
+export default CountdownClock;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/FooterComponent.jsx ====================
+
+import React from 'react';
+import './FooterComponent.css'; // Ensure the CSS file is properly imported
+
+const FooterComponent = () => {
+  return (
+    <div id="footer" className="bgfooter">
+      <div className="container">
+        <div className="row footer-content">
+          {/* Reach Us Section */}
+          <div className="col-md-4 footer-section">
+            <h3>Reach Us</h3>
+            <p>
+              <strong className="text-primary">TVS Motor Email:</strong>
+              <a href="mailto:customercare@tvsmotor.com" className="text-light">
+                customercare@tvsmotor.com
+              </a>
+            </p>
+            <p>
+              <strong className="text-primary">TVS Motor Call:</strong>
+              <a href="tel:18002587555" className="text-light">
+                18002587555
+              </a>
+            </p>
+          </div>
+
+          {/* Follow Us Section */}
+          <div className="col-md-4 footer-section text-center">
+            <h3>Follow Us</h3>
+            <a href="https://in.linkedin.com/company/tvs-motor-company" title="LinkedIn" className="mx-2">
+              <img src="logo/linkedin.png" alt="LinkedIn" className="footer-icon" />
+            </a>
+            <a href="https://www.youtube.com/@tvsmotorcompany" title="YouTube" className="mx-2">
+              <img src="logo/youtube.png" alt="YouTube" className="footer-icon" />
+            </a>
+            <a href="https://www.facebook.com/tvsmotorcompany/" title="Facebook" className="mx-2">
+              <img src="logo/facebook.png" alt="Facebook" className="footer-icon" />
+            </a>
+            <a href="https://www.instagram.com/tvsmotorcompany/?hl=en" title="Instagram" className="mx-2">
+              <img src="logo/instagram.png" alt="Instagram" className="footer-icon" />
+            </a>
+            <a href="https://twitter.com/tvsmotorcompany?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" title="Twitter" className="mx-2">
+              <img src="logo/x.png" alt="Twitter" className="footer-icon" />
+            </a>
+          </div>
+
+          {/* Legal Section */}
+          <div className="col-md-4 footer-section">
+            <div className="legal-text">
+              <p>© TVS Motor Company. All Rights Reserved</p>
+              <div className="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span className="separator">|</span>
+                <a href="#">Disclaimer</a>
+                <span className="separator">|</span>
+                <a href="#">Cookie Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FooterComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Fragment.jsx ====================
+
+{/* <Fragment>
+<audio id="correct-sound" src={correctNotification.mp3}></audio>
+<audio id="wrong-sound" src={wrongNotification.mp3}></audio>
+</Fragment> */}
+
+--------------------------------------------------------------------------------
+
+==================== components/HeaderComponent.jsx ====================
+
+import React from 'react';
+import './HeaderComponent.css';
+
+const HeaderComponent = () => {
+  return (
+    <div className="container-fluid bgheader">
+      <div id="heading" className="d-flex align-items-center">
+        <h1 className="mx-auto">TVS MOTOR QUIZ</h1>
+
+        <img src="/logo/tvslogo.jpg" alt="TVS Motors" className="imgfloat" width="100px" height="50px" />
+      </div>
+    </div>
+  );
+};
+
+export default HeaderComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/LoginPage.jsx ====================
+
+import React, { useState, useEffect } from 'react';
+import './LoginPage.css';
+import { useNavigate } from 'react-router-dom';
+
+const LoginPage = () => {
+    const [fadeIn, setFadeIn] = useState(false);
+    const [email, setEmail] = useState('');
+    const [empId, setEmpId] = useState('');
+    const [errors, setErrors] = useState({ email: '', empId: '' });
+    const [isFormValid, setIsFormValid] = useState(false);
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+        setFadeIn(true);
+    }, []);
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validateEmpId = (empId) => {
+        const empIdRegex = /^\d{5}$/; 
+        return empIdRegex.test(empId);
+    };
+
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+
+        if (!validateEmail(newEmail)) {
+            setErrors((prev) => ({ ...prev, email: 'Invalid email format' }));
+        } else {
+            setErrors((prev) => ({ ...prev, email: '' }));
+        }
+    };
+
+    const handleEmpIdChange = (e) => {
+        const newEmpId = e.target.value;
+        setEmpId(newEmpId);
+
+        if (!validateEmpId(newEmpId)) {
+            setErrors((prev) => ({ ...prev, empId: 'Employee ID must be exactly 5 digits' }));
+        } else {
+            setErrors((prev) => ({ ...prev, empId: '' }));
+        }
+    };
+
+    useEffect(() => {
+        setIsFormValid(validateEmail(email) && validateEmpId(empId));
+    }, [email, empId]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Prevent form submission
+        if (isFormValid) {
+            navigate('/quiz'); // Navigate to the quiz page
+        }
+    };
+
+    return (
+        <div className={`login-container ${fadeIn ? 'fade-in' : ''}`}>
+            <div className="login-card">
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="email">Email ID:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={handleEmailChange}
+                            required
+                        />
+                        {errors.email && <div className="error">{errors.email}</div>}
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="empId">Employee ID:</label>
+                        <input
+                            type="text"
+                            id="empId"
+                            placeholder="Enter your employee ID"
+                            value={empId}
+                            onChange={handleEmpIdChange}
+                            required
+                        />
+                        {errors.empId && <div className="error">{errors.empId}</div>}
+                    </div>
+                    <button type="submit" className="submit-button" disabled={!isFormValid}>
+                        Go to Quiz
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default LoginPage;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Question.jsx ====================
+
+import React from 'react';
+
+function Question({ questionData, selectedOption, handleOptionChange, questionNumber }) {
+  return (
+    <div
+      id={`question-${questionData.id}`}
+      className="question-container mb-4 p-4 border rounded bg-light shadow-sm"
+    >
+      <h4 className="mb-3 text-primary">Question {questionNumber}: {questionData.question}</h4>
+      <div className="form-group">
+        {questionData.options.map(option => (
+          <div key={option} className="form-check mb-2">
+            <input
+              type="radio"
+              id={`${questionData.id}-${option}`}
+              name={`question-${questionData.id}`}
+              value={option}
+              checked={selectedOption === option}
+              onChange={() => handleOptionChange(questionData.id, option)}
+              className="form-check-input"
+            />
+            <label
+              htmlFor={`${questionData.id}-${option}`}
+              className="form-check-label"
+            >
+              {option}
+            </label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Question;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Result.jsx ====================
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Result({ score, total, correctAnswers, userAnswers }) {
+  const navigate = useNavigate();
+
+
+  return (
+    <div className="text-center mt-5">
+      <h2 className="mb-4">
+        Your Score: <span className="badge bg-success">{score} / {total}</span>
+      </h2>
+      <h4 className="mb-4">Answers Review:</h4>
+      <ul className="list-group">
+        {correctAnswers && correctAnswers.length > 0 ? (
+          correctAnswers.map((answer, index) => {
+            const userAnswer = userAnswers && userAnswers[answer.id];
+            const isCorrect = userAnswer
+              ? userAnswer.toLowerCase().trim() === (answer.correctAnswer || '').toLowerCase().trim()
+              : false;
+
+            return (
+              <li
+                key={index}
+                className={`list-group-item d-flex flex-column align-items-center ${isCorrect ? 'bg-success text-white bg-gradient' : 'bg-danger text-white bg-gradient'
+                  }`}
+              >
+                <div className="text-center">
+                  <div><strong>{index + 1}. {answer.question}</strong></div>
+                  <div className="mt-2">
+                    <div className="mb-2">
+                      {/* <span className={`badge ${isCorrect ? 'bg-success' : 'bg-danger'}`}> */}
+                      <span className={`badge ${'bg-secondary bg-gradient'}`}>
+                        Your Answer: {userAnswer || 'Not Answered'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className={`badge ${'bg-dark bg-gradient'}`}>
+                        Correct Answer: {answer.correctAnswer}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            );
+          })
+        ) : (
+          <li className="list-group-item">No answers to display</li>
+        )}
+      </ul>
+      <button className="btn btn-info mt-2" onClick={() => navigate('/')}>
+        Go To Home
+      </button>
+    </div>
+  );
+}
+
+export default Result;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Sidebar.jsx ====================
+
+import React, { useState } from 'react';
+import CountdownClock from './CountdownClock';
+
+function Sidebar({ quizData = [], handleSubmit }) {
+  const [isTimeUp, setIsTimeUp] = useState(false);
+
+  const handleTimeUp = () => {
+    setIsTimeUp(true);
+    alert("Your time is up... Click OK to submit...")
+    handleSubmit();
+  };
+
+  const handleNavigation = (questionId) => {
+    const questionElement = document.getElementById(`question-${questionId}`);
+    if (questionElement) {
+      questionElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <aside className="sidebar bg-light p-3 shadow-sm" style={{ width: '300px' }}>
+      <h4>Questions</h4>
+      <CountdownClock duration={100} onTimeUp={handleTimeUp} /> {/* Set timer duration as needed */}
+      <ul className="list-group mb-3">
+        {quizData.length === 0 ? (
+          <li className="list-group-item">No questions available</li>
+        ) : (
+          quizData.map((question) => (
+            <li
+              key={question.id}
+              className="list-group-item"
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleNavigation(question.id)}
+            >
+              Question {question.id}
+            </li>
+          ))
+        )}
+      </ul>
+      <button
+        className="btn btn-success w-100"
+        onClick={handleSubmit}
+        disabled={isTimeUp} // Disable the button if time is up
+      >
+        Submit
+      </button>
+    </aside>
+  );
+}
+
+export default Sidebar;
+
+
+--------------------------------------------------------------------------------
+

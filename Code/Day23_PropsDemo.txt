@@ -1,0 +1,138 @@
+==================== App.js ====================
+
+import logo from './logo.svg';
+import './App.css';
+import HeaderComponent from './header/HeaderComponent';
+import FooterComponent from './footer/FooterComponent';
+import VehicleComponent from './vehicle/VehicleComponent';
+import VehicleDetailsComponent from './vehicle/VehicleDetailsComponent';
+
+function App() {
+  const vehicle = {
+    "name" : "TVS Raider",
+    "model" : "2024",
+    "color" : "black"
+  }
+  return (
+    <div className="App">
+      <h1>Hello</h1>
+      <HeaderComponent />
+      <VehicleComponent name = "jupiter"/>
+      <VehicleDetailsComponent vehicleobj = {vehicle}/>
+      <FooterComponent />
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== footer/FooterComponent.jsx ====================
+
+import React from 'react'
+import bgfooter from './FooterComponent.css'
+
+const FooterComponent = () => {
+  return (
+    <div className = "bgfooter">
+        <h4>TVS Motor &copy; Rights Reserved</h4>
+    </div>
+  )
+}
+
+export default FooterComponent
+
+--------------------------------------------------------------------------------
+
+==================== header/HeaderComponent.jsx ====================
+
+import React from 'react'
+import bgheader from './HeaderComponent.css'
+
+const HeaderComponent = () => {
+  return (
+    <div className = "bgheader">
+        <h1>TVS Motor Company</h1>
+    </div>
+  )
+}
+
+export default HeaderComponent
+
+--------------------------------------------------------------------------------
+
+==================== vehicle/VehicleComponent.jsx ====================
+
+import React from 'react'
+
+const VehicleComponent = (props) => {
+  return (
+    <div>
+        <h2>Vehicle Component</h2>
+        <p>The name of the Vehicle is {props.name}</p>
+    </div>
+  )
+}
+
+export default VehicleComponent
+
+--------------------------------------------------------------------------------
+
+==================== vehicle/VehicleDetailsComponent.jsx ====================
+
+import React from 'react'
+
+const VehicleDetailsComponent = (props) => {
+  return (
+    <div>
+        <h2>Vehicle Details Component</h2>
+        <p>{props.vehicleobj.name}</p>
+        <p>{props.vehicleobj.model}</p>
+        <p>{props.vehicleobj.color}</p>
+    </div>
+  )
+}
+
+export default VehicleDetailsComponent
+
+--------------------------------------------------------------------------------
+

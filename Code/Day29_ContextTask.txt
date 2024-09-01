@@ -1,0 +1,138 @@
+==================== App.js ====================
+
+import './App.css';
+import Increment from './components/Increment';
+import Decrement from './components/Decrement';
+import Show from './components/Show';
+import { createContext, useState } from 'react';
+
+export const UserContext = createContext(); // Global Storage
+
+function App() {
+  const [counter, setCounter] = useState(0);
+
+  return (
+    <div className="App">
+      <UserContext.Provider value={{ counter, setCounter }}>
+        <Increment />
+        <Decrement />
+        <Show />
+      </UserContext.Provider>
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Decrement.jsx ====================
+
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const Decrement = () => {
+  const { counter, setCounter } = useContext(UserContext);
+
+  const handleDecrement = () => {
+    setCounter(counter - 5);
+  };
+
+  return (
+    <div style={{ backgroundColor: "pink" }}>
+      <h1>This is Decrement Component</h1>
+      <button onClick={handleDecrement} className='btn btn-danger mb-2'>Decrease</button>
+    </div>
+  );
+};
+
+export default Decrement;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Increment.jsx ====================
+
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
+
+const Increment = () => {
+  const { counter, setCounter } = useContext(UserContext);
+
+  const handleIncrement = () => {
+    setCounter(counter + 5);
+  };
+
+  return (
+    <div style={{ backgroundColor: "yellow" }}>
+      <h1>This is Increment Component</h1>
+      <button onClick={handleIncrement} className='btn btn-success mb-2'>Increase</button>
+    </div>
+  );
+};
+
+export default Increment;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Show.jsx ====================
+
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
+
+const Show = () => {
+  const { counter } = useContext(UserContext);
+
+  return (
+    <div style={{ backgroundColor: "lightblue" }}>
+      <h1>This is Display Component</h1>
+      <p><strong>The current value is: {counter}</strong></p>
+    </div>
+  );
+};
+
+export default Show;
+
+
+--------------------------------------------------------------------------------
+

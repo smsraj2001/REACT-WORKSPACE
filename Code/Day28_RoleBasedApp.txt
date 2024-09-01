@@ -1,0 +1,641 @@
+==================== App.js ====================
+
+import { Route, Routes, Navigate } from 'react-router-dom';
+import './App.css';
+import Home from './components/Home';
+import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
+import Login from './components/Login';
+import ProtectedRoute from './routeconfig/ProtectedRoute';
+import Products from './components/Products';
+import Admin from './components/Admin';
+import User from './components/User';
+
+
+function App() {
+  let getUserRole = () =>
+  {
+    const user = localStorage.getItem("user");
+    const u = JSON.parse(user);
+    console.log(`Role is ${u.role}`)
+    return u.role;
+  }
+
+  const mycurrentrole = getUserRole();
+  // alert(mycurrentrole)
+  return (
+    <div className="App">
+      <Routes>
+        {/* <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/products" element={<Products />} />
+        </Route> */}
+        
+        <Route path="/login" element={<Login />} />
+        <Route path = "/" element = {<Home />} />
+        <Route path = "/admin" element = {mycurrentrole === "admin" ? <> <Admin />  </> : <h1>Only admin can access this page</h1>} />
+        <Route path = "/user" element = {mycurrentrole === "user" ? <User /> : <h1>Only user can access this page</h1>} />
+        <Route path="/contactus" element={mycurrentrole === "user" || mycurrentrole === "admin" ? <ContactUs/ > : <h1>Not accessible</h1>} />
+        <Route path="/aboutus" element={mycurrentrole === "user" || mycurrentrole === "admin" ? <AboutUs/ > : <h1>Not accessible</h1>} />
+        <Route path = "*" element = { <h1>Page Not Found</h1>} />
+
+        {/* Redirect from the root path to the login page */}
+        {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals'
+import { BrowserRouter } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+  <App />
+  </BrowserRouter>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/AboutUs.jsx ====================
+
+import React from 'react'
+
+const AboutUs = () => {
+
+    return (
+        <div className="container mt-5">
+            {/* Hero Section */}
+            <section className="text-center mb-5">
+                <div className="bg-info bg-gradient p-4 rounded-3 shadow-sm">
+                    <h1 className="display-4 mb-3">About Us</h1>
+                    <p className="lead">
+                        Discover who we are and what drives us.
+                    </p>
+                </div>
+            </section>
+
+            {/* Vision & Mission Section */}
+            <section className="mb-5">
+                <div className="container">
+                    <div className="row">
+                        {/* Vision Section */}
+                        <div className="col-lg-6 mb-4">
+                            <div className="p-4 rounded-3 bg-success bg-gradient text-white h-100 d-flex flex-column justify-content-center align-items-center">
+                                <h2 className="display-5 mb-3 text-center">Our Vision</h2>
+                                <p className="lead text-center">
+                                    To transform the quality of life of people across the world by providing mobility solutions that are exciting, responsible, sustainable, and safe.
+                                </p>
+                            </div>
+                        </div>
+                        {/* Mission Section */}
+                        <div className="col-lg-6 mb-4">
+                            <div className="p-4 rounded-3 bg-warning bg-gradient shadow-sm h-100 d-flex flex-column justify-content-center">
+                                <h2 className="display-5 mb-3 text-center">Our Mission</h2>
+                                <div className="d-flex flex-column gap-4">
+                                    {[
+                                        "An innovation-driven culture thriving on relentless reflection and teamwork",
+                                        "Focus on speed and agility to seize opportunities in a Volatile Uncertain Complicated Ambiguous (VUCA) world",
+                                        "Scalable technology platforms & solutions with the highest quality to delight customers",
+                                        "Commitment towards a sustainable future for societies and the environment"
+                                    ].map((item, index) => (
+                                        <p key={index} className="mb-3">
+                                            {item}
+                                        </p>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Core Values Section */}
+            <section className="text-center mb-5">
+                <h2 className="display-4 mb-4">Core Values</h2>
+                <div className="row">
+                    {/* Core Values Cards */}
+                    {["Trust", "Customer Obsession", "Value Maximization", "Speed & Agility", "Exactness", "Disruptive Mindset"].map((value, index) => (
+                        <div key={index} className="col-md-4 mb-4">
+                            <div className="card border-0 bg-dark bg-gradient text-white shadow-lg rounded-3">
+                                <div className="card-body p-4">
+                                    <h3 className="card-title mb-3">{value}</h3>
+                                    <p className="card-text">
+                                        Embracing {value} in every aspect of our work.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default AboutUs;
+
+--------------------------------------------------------------------------------
+
+==================== components/Admin.jsx ====================
+
+import React from 'react'
+
+const Admin = () => {
+  return (
+    <div>This is Admin Page</div>
+  )
+}
+
+export default Admin
+
+--------------------------------------------------------------------------------
+
+==================== components/ContactUs.jsx ====================
+
+import React from 'react'
+
+const ContactUs = () => {
+  return (
+    <div>
+        <h1>ContactUs</h1>
+
+    </div>
+  )
+}
+
+export default ContactUs
+
+--------------------------------------------------------------------------------
+
+==================== components/FooterComponent.jsx ====================
+
+import React from 'react';
+import './FooterComponent.css'; // Ensure the CSS file is properly imported
+
+const FooterComponent = () => {
+  return (
+    <div id="footer" className="bgfooter">
+      <div className="container">
+        <div className="row footer-content">
+          {/* Reach Us Section */}
+          <div className="col-md-4 footer-section">
+            <h3>Reach Us</h3>
+            <p>
+              <strong className="text-primary">TVS Motor Email:</strong> 
+              <a href="mailto:customercare@tvsmotor.com" className="text-light">
+                customercare@tvsmotor.com
+              </a>
+            </p>
+            <p>
+              <strong className="text-primary">TVS Motor Call:</strong> 
+              <a href="tel:18002587555" className="text-light">
+                18002587555
+              </a>
+            </p>
+          </div>
+
+          {/* Follow Us Section */}
+          <div className="col-md-4 footer-section text-center">
+            <h3>Follow Us</h3>
+            <a href="https://in.linkedin.com/company/tvs-motor-company" title="LinkedIn" className="mx-2">
+              <img src="logo/linkedin.png" alt="LinkedIn" className="footer-icon" />
+            </a>
+            <a href="https://www.youtube.com/@tvsmotorcompany" title="YouTube" className="mx-2">
+              <img src="logo/youtube.png" alt="YouTube" className="footer-icon" />
+            </a>
+            <a href="https://www.facebook.com/tvsmotorcompany/" title="Facebook" className="mx-2">
+              <img src="logo/facebook.png" alt="Facebook" className="footer-icon" />
+            </a>
+            <a href="https://www.instagram.com/tvsmotorcompany/?hl=en" title="Instagram" className="mx-2">
+              <img src="logo/instagram.png" alt="Instagram" className="footer-icon" />
+            </a>
+            <a href="https://twitter.com/tvsmotorcompany?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" title="Twitter" className="mx-2">
+              <img src="logo/x.png" alt="Twitter" className="footer-icon" />
+            </a>
+          </div>
+
+          {/* Legal Section */}
+          <div className="col-md-4 footer-section">
+            <div className="legal-text">
+              <p>© TVS Motor Company. All Rights Reserved</p>
+              <div className="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span className="separator">|</span>
+                <a href="#">Disclaimer</a>
+                <span className="separator">|</span>
+                <a href="#">Cookie Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FooterComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/HeaderComponent.jsx ====================
+
+import React from 'react';
+import './HeaderComponent.css';
+
+const HeaderComponent = () => {
+  return (
+    <div className="container-fluid bgheader">
+      <div id="heading" className="d-flex align-items-center">
+      <h1 className="mx-auto">TVS MOTOR COMPANY LIMITED</h1>
+
+        <img src="/logo/tvslogo.jpg" alt="TVS Motors" className="imgfloat" width="100px" height="50px" />
+      </div>
+    </div>
+  );
+};
+
+export default HeaderComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Home.jsx ====================
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const Home = () => {
+
+  return (
+    <div>
+        <h1>Home Page</h1>
+        <Link to = "/aboutus" >About Us</Link>
+        <Link to = "contactus" >Contact Us</Link>
+        <Link to = "/admin" >Admin Page</Link>
+        <Link to = "/user" >User Page</Link>
+    </div>
+  )
+}
+
+export default Home
+
+--------------------------------------------------------------------------------
+
+==================== components/Login.jsx ====================
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const Login = () => {
+    const [uname, setUname] = useState('');
+    const [pass, setPass] = useState('');
+    const[role, setRole] = useState('')
+    const navigate = useNavigate();
+
+    function validateUser(e) {
+        e.preventDefault(); // Prevent form submission
+        if (uname === 'admin' && pass === 'admin') {
+            alert('Valid Admin');
+            // localStorage.setItem("user", true)
+            // navigate('/home')
+            // setRole('admin')
+            const user = {uname, pass, role:"admin"}
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/");
+        } 
+
+        else if(uname === 'user1' && pass === 'pass1')
+        {
+            alert("Valid User");
+            setRole('user')
+            // navigate('/home')
+            const user = {uname, pass, role:"user"}
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/");
+        }
+
+        else 
+        {
+            alert('Invalid User');
+            localStorage.setItem("user", false)
+        }
+    }
+    let logout = () => {
+        localStorage.setItem("user", false)
+        navigate('/login')
+    }
+
+    return (
+        <div>
+            <h1>Login</h1>
+            <form className='form-control' onSubmit={validateUser}>
+                <input
+                    type='text'
+                    placeholder='username'
+                    id='uname'
+                    value={uname}
+                    onChange={(e) => setUname(e.target.value)
+                    }
+                    className="mb-2 me-2"
+                    required
+                />
+                <input
+                    type='password'
+                    placeholder='password'
+                    id='pass'
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    required
+                />
+                <br />
+                <button className="btn btn-info" type='submit'>Login</button>
+            </form>
+            <button className="btn btn-danger" onClick={() => (localStorage.setItem("user", false))}>Logout</button>
+            {/* <button onClick={logout}>Logout</button> */}
+        </div>
+    );
+};
+
+export default Login;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Navbar.jsx ====================
+
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+const Navbar = () => {
+  const navigate = useNavigate();
+  let logout = () => {
+    localStorage.setItem("user", false);
+    navigate('/login');
+  }
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/">
+          <img src="logo/tvslogo.jpg" alt="TVS Logo" width="60" height="30" />
+        </Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link border rounded px-3 mx-1" aria-current="page" to="/aboutus">About Us</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link active border rounded px-3 mx-1" aria-current="page" to="/home">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link border rounded px-3 mx-1" aria-current="page" to="/products">Our Products</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link border rounded px-3 mx-1" aria-current="page" to="/contactus">Contact Us</Link>
+            </li>
+            <li className="nav-item">
+              <button onClick={logout} className="btn btn-danger border rounded px-3 mx-1">Logout</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Products.jsx ====================
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Products = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [filteredVehicles, setFilteredVehicles] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/vehicles')
+      .then(response => {
+        setVehicles(response.data);
+        setFilteredVehicles(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory === 'All') {
+      setFilteredVehicles(vehicles);
+    } else {
+      const filtered = vehicles.filter(vehicle => {
+        // Ensure category comparison is case-insensitive
+        return vehicle.category.toLowerCase() === selectedCategory.toLowerCase();
+      });
+      setFilteredVehicles(filtered);
+    }
+  }, [selectedCategory, vehicles]);
+
+  return (
+    <div>
+      {/* Navbar for vehicle categories */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#!">TVS Motors</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('All')}>All</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Scooters')}>Scooters</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Motorcycles')}>Motorcycles</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Mopeds')}>Mopeds</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Electric')}>Electric</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Three Wheelers')}>Three Wheelers</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div className="container mt-5">
+        <h1 className="text-center mb-4">TVS Motors</h1>
+        <div className="row">
+          {filteredVehicles.map((vehicle, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className="card">
+                <img
+                  src={vehicle.image}
+                  className="card-img-top"
+                  alt={vehicle.name}
+                  style={{ maxHeight: '200px', objectFit: 'cover' }} // Ensures images fit nicely
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{vehicle.name}</h5>
+                  <table className="table">
+                    <tbody>
+                      {vehicle.engine && (
+                        <tr>
+                          <td><strong>Engine:</strong></td>
+                          <td>{vehicle.engine}</td>
+                        </tr>
+                      )}
+                      {vehicle.power && (
+                        <tr>
+                          <td><strong>Power:</strong></td>
+                          <td>{vehicle.power}</td>
+                        </tr>
+                      )}
+                      {vehicle.weight && (
+                        <tr>
+                          <td><strong>Weight:</strong></td>
+                          <td>{vehicle.weight}</td>
+                        </tr>
+                      )}
+                      {vehicle.price && (
+                        <tr>
+                          <td><strong>Price:</strong></td>
+                          <td>{vehicle.price}</td>
+                        </tr>
+                      )}
+                      {vehicle.category && (
+                        <tr>
+                          <td><strong>Category:</strong></td>
+                          <td>{vehicle.category}</td>
+                        </tr>
+                      )}
+                      {vehicle.range && (
+                        <tr>
+                          <td><strong>Range:</strong></td>
+                          <td>{vehicle.range}</td>
+                        </tr>
+                      )}
+                      {vehicle.batteryCapacity && (
+                        <tr>
+                          <td><strong>Battery Capacity:</strong></td>
+                          <td>{vehicle.batteryCapacity}</td>
+                        </tr>
+                      )}
+                      {vehicle.topSpeed && (
+                        <tr>
+                          <td><strong>Top Speed:</strong></td>
+                          <td>{vehicle.topSpeed}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Products;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/User.jsx ====================
+
+import React from 'react'
+
+const User = () => {
+  return (
+    <div>This is User Page</div>
+  )
+}
+
+export default User
+
+--------------------------------------------------------------------------------
+
+==================== routeconfig/ProtectedRoute.jsx ====================
+
+import React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
+import Navbar from '../components/Navbar';
+import HeaderComponent from '../components/HeaderComponent';
+import FooterComponent from '../components/FooterComponent';
+
+const ProtectedRoute = () => {
+    // let auth = {token: true}
+    // let auth = localStorage.getItem("user");
+
+    let keyvalue = JSON.parse(localStorage.getItem("user"));
+    let auth = {token : keyvalue};
+
+  return (
+    <div>
+        {
+            // ((auth.token === "true") ? <Outlet /> : <Navigate to = '/login' />)
+            ((auth.token === true) ? <><HeaderComponent /><Navbar /> <Outlet /><FooterComponent /></>: <Navigate to = '/login' />)
+        }
+    </div>
+  )
+}
+
+export default ProtectedRoute
+
+--------------------------------------------------------------------------------
+

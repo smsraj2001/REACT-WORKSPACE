@@ -1,0 +1,1181 @@
+==================== App.js ====================
+
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Header from './components/HeaderComponent';
+import Footer from './components/FooterComponent';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import ContactUs from './components/ContactUs';
+import AboutUs from './components/AboutUs';
+import Products from './components/Products';
+import Cart from './components/Cart';
+import UserForm from './components/UserForm';
+import Services from './components/Services';
+import Media from './components/Media';
+import Sustainability from './components/Sustainability';
+import International from './components/International';
+import Investors from './components/Investors';
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} /> {/* Default path */}
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/userform" element={<UserForm />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/media" element={<Media />} />
+        <Route path="/sustainability" element={<Sustainability />} />
+        <Route path="/international" element={<International />} />
+        <Route path="/investors" element={<Investors />} />
+        <Route path="*" element={<Navigate to="/" />} /> {/* Redirect all unmatched routes to home */}
+      </Routes>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min'; 
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+  <App />
+  </BrowserRouter>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/AboutUs.jsx ====================
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+const AboutUs = () => {
+  return (
+    <div className="container mt-5">
+      {/* Hero Section */}
+      <section className="text-center mb-5">
+        <div className="bg-info p-4 rounded-3 shadow-sm">
+          <h1 className="display-4 mb-3">About Us</h1>
+          <p className="lead">
+            Discover who we are and what drives us.
+          </p>
+        </div>
+      </section>
+
+      {/* Vision & Mission Section */}
+      <section className="mb-5">
+        <div className="container">
+          <div className="row">
+            {/* Vision Section */}
+            <div className="col-lg-6 mb-4">
+              <div className="p-4 rounded-3 bg-success text-white h-100 d-flex flex-column justify-content-center align-items-center">
+                <h2 className="display-5 mb-3 text-center">Our Vision</h2>
+                <p className="lead text-center">
+                  To transform the quality of life of people across the world by providing mobility solutions that are exciting, responsible, sustainable, and safe.
+                </p>
+              </div>
+            </div>
+            {/* Mission Section */}
+            <div className="col-lg-6 mb-4">
+              <div className="p-4 rounded-3 bg-warning shadow-sm h-100 d-flex flex-column justify-content-center">
+                <h2 className="display-5 mb-3 text-center">Our Mission</h2>
+                <div className="d-flex flex-column gap-4">
+                  {[
+                    "An innovation-driven culture thriving on relentless reflection and teamwork",
+                    "Focus on speed and agility to seize opportunities in a Volatile Uncertain Complicated Ambiguous (VUCA) world",
+                    "Scalable technology platforms & solutions with the highest quality to delight customers",
+                    "Commitment towards a sustainable future for societies and the environment"
+                  ].map((item, index) => (
+                    <p key={index} className="mb-3">
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values Section */}
+      <section className="text-center mb-5">
+        <h2 className="display-4 mb-4">Core Values</h2>
+        <div className="row">
+          {/* Core Values Cards */}
+          {["Trust", "Customer Obsession", "Value Maximization", "Speed & Agility", "Exactness", "Disruptive Mindset"].map((value, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card border-0 bg-dark text-white shadow-lg rounded-3">
+                <div className="card-body p-4">
+                  <h3 className="card-title mb-3">{value}</h3>
+                  <p className="card-text">
+                    Embracing {value} in every aspect of our work.
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="text-center">
+        <Link to="/" className="btn btn-primary btn-lg shadow-lg">
+          Return to Home
+        </Link>
+      </section>
+    </div>
+  );
+};
+
+export default AboutUs;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Cart.jsx ====================
+
+import React from 'react';
+
+const Cart = () => {
+  return (
+    <div className="row mb-4">
+      {/* Form Section */}
+      <div className="col-md-8 offset-md-2">
+        <div className="card p-4 shadow-sm">
+          <h3 className="text-center mb-4">Shop with us</h3>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">Username</label>
+              <input type="text" className="form-control" id="username" name="U" placeholder="Enter your username" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Password</label>
+              <input type="password" className="form-control" id="password" name="P" placeholder="Enter your password" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="product" className="form-label">Product</label>
+              <select className="form-select" id="product">
+                <option value="ntorq">NTorq</option>
+                <option value="jupiter">Jupiter</option>
+                <option value="ronin">Ronin</option>
+                <option value="apache">Apache</option>
+                <option value="iqube">IQube</option>
+                <option value="king">King</option>
+              </select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="quantity" className="form-label">Quantity</label>
+              <input type="number" className="form-control" id="quantity" name="quantity" min="1" placeholder="Enter quantity" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="cart" className="form-label">Additional Notes</label>
+              <textarea className="form-control" id="cart" rows="3" placeholder="Add any additional notes here"></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary w-100">Add to Cart</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Cart;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/ContactUs.jsx ====================
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const ContactUs = () => {
+  return (
+    <div>
+        <h1> Contact Us Component </h1>
+        <Link to = "/">Go to Home</Link>
+    </div>
+  )
+}
+
+export default ContactUs
+
+--------------------------------------------------------------------------------
+
+==================== components/FooterComponent.jsx ====================
+
+import React from 'react';
+import './FooterComponent.css'; // Ensure the CSS file is properly imported
+
+const FooterComponent = () => {
+  return (
+    <div id="footer" className="bgfooter">
+      <div className="container">
+        <div className="row footer-content">
+          {/* Reach Us Section */}
+          <div className="col-md-4 footer-section">
+            <h3>Reach Us</h3>
+            <p>
+              <strong className="text-primary">TVS Motor Email:</strong> 
+              <a href="mailto:customercare@tvsmotor.com" className="text-light">
+                customercare@tvsmotor.com
+              </a>
+            </p>
+            <p>
+              <strong className="text-primary">TVS Motor Call:</strong> 
+              <a href="tel:18002587555" className="text-light">
+                18002587555
+              </a>
+            </p>
+          </div>
+
+          {/* Follow Us Section */}
+          <div className="col-md-4 footer-section text-center">
+            <h3>Follow Us</h3>
+            <a href="https://in.linkedin.com/company/tvs-motor-company" title="LinkedIn" className="mx-2">
+              <img src="logo/linkedin.png" alt="LinkedIn" className="footer-icon" />
+            </a>
+            <a href="https://www.youtube.com/@tvsmotorcompany" title="YouTube" className="mx-2">
+              <img src="logo/youtube.png" alt="YouTube" className="footer-icon" />
+            </a>
+            <a href="https://www.facebook.com/tvsmotorcompany/" title="Facebook" className="mx-2">
+              <img src="logo/facebook.png" alt="Facebook" className="footer-icon" />
+            </a>
+            <a href="https://www.instagram.com/tvsmotorcompany/?hl=en" title="Instagram" className="mx-2">
+              <img src="logo/instagram.png" alt="Instagram" className="footer-icon" />
+            </a>
+            <a href="https://twitter.com/tvsmotorcompany?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" title="Twitter" className="mx-2">
+              <img src="logo/x.png" alt="Twitter" className="footer-icon" />
+            </a>
+          </div>
+
+          {/* Legal Section */}
+          <div className="col-md-4 footer-section">
+            <div className="legal-text">
+              <p>© TVS Motor Company. All Rights Reserved</p>
+              <div className="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span className="separator">|</span>
+                <a href="#">Disclaimer</a>
+                <span className="separator">|</span>
+                <a href="#">Cookie Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FooterComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/HeaderComponent.jsx ====================
+
+import React from 'react';
+import './HeaderComponent.css';
+
+const HeaderComponent = () => {
+  return (
+    <div className="container-fluid bgheader">
+      <div id="heading" className="d-flex align-items-center">
+      <h1 className="mx-auto">TVS MOTOR COMPANY LIMITED</h1>
+
+        <img src="/logo/tvslogo.jpg" alt="TVS Motors" className="imgfloat" width="100px" height="50px" />
+      </div>
+    </div>
+  );
+};
+
+export default HeaderComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Home.jsx ====================
+
+import React from 'react';
+import { alignPropType } from 'react-bootstrap/esm/types';
+import { Link } from 'react-router-dom';
+
+const Home = () => {
+  return (
+
+    <div>
+      <div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="Pictures/home1.jpg" class="d-block w-100" alt="..." />
+    </div>
+    <div class="carousel-item">
+      <img src="Pictures/home2.jpg" class="d-block w-100" alt="..." />
+    </div>
+    <div class="carousel-item">
+      <img src="Pictures/home3.jpg" class="d-block w-100" alt="..." />
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+  <h2 className="text-center">Presenting you... The definition of novelty...</h2>
+    <main className="container my-5">
+      <div className="row g-4">
+        <div className="col-md-4">
+          <div
+            className="position-relative bg-image rounded-3"
+            style={{
+              backgroundImage: "url('logo/main1.jpg')",
+              height: '400px',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+              <div className="text-center text-white">
+                <h3 className="mb-3">TAKE OFF WITH THE 125 3-VALVE</h3>
+                <h4 className="mb-3">CVTI REVV ENGINE</h4>
+                <Link className="btn btn-outline-light btn-lg" to="/learn-more">Learn More</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div
+            className="position-relative bg-image rounded-3"
+            style={{
+              backgroundImage: "url('logo/main2.jpg')",
+              height: '400px',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+              <div className="text-center text-white">
+                <h3 className="mb-3">ROADS WITH STEALTH OF THE AGE</h3>
+                <h4 className="mb-3">AIRCRAFT INSPIRED DESIGN</h4>
+                <Link className="btn btn-outline-light btn-lg" to="/learn-more">Learn More</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div
+            className="position-relative bg-image rounded-3"
+            style={{
+              backgroundImage: "url('logo/main3.jpg')",
+              height: '400px',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+              <div className="text-center text-white">
+                <h3 className="mb-3">TVS RACING INSPIRED PERFORMANCE</h3>
+                <h4 className="mb-3">
+                  <img src="logo/tvsracing.png" alt="TVS Racing" className="img-fluid" />
+                </h4>
+                <Link className="btn btn-outline-light btn-lg" to="/learn-more">Learn More</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    </div>
+  );
+};
+
+export default Home;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/International.jsx ====================
+
+import React from 'react';
+
+const International = () => {
+  return (
+    <div className="container mt-5 bg-light py-5 rounded shadow-sm" style={{ backgroundImage: 'url(Pictures/international.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <h1 className="text-center mb-4 text-white">Our Global Outreach</h1>
+      <p className="lead text-center text-white mb-5">
+        TVS Motors has established a strong global presence, reaching customers across various continents with its diverse range of products and innovative technologies.
+      </p>
+      <div className="row">
+        <div className="col-md-6 mb-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h3>Global Reach</h3>
+            <p>
+              With a presence in over 60 countries, TVS Motors has built a reputation for delivering high-quality, reliable, and innovative mobility solutions. Our international operations span across Asia, Africa, the Middle East, Latin America, and Europe, making us a trusted brand worldwide.
+            </p>
+            <p>
+              Our global footprint is supported by a robust network of dealerships, service centers, and distributors, ensuring that our customers receive exceptional service and support no matter where they are located.
+            </p>
+          </div>
+        </div>
+        <div className="col-md-6 mb-4">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h3>International Achievements</h3>
+            <ul>
+              <li>Ranked among the top two-wheeler manufacturers in India and a leading exporter of two-wheelers worldwide.</li>
+              <li>Received the prestigious Global Green Manufacturing Award for our commitment to sustainable practices.</li>
+              <li>Launched the TVS Apache series in Europe, receiving accolades for its performance and design.</li>
+              <li>Expanded operations into new markets, including the introduction of electric vehicles in multiple international regions.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="bg-white p-4 rounded shadow-sm">
+            <h3>Upcoming International Projects</h3>
+            <p>
+              TVS Motors is excited about several upcoming international projects that will further solidify our global presence. These projects include new product launches, strategic partnerships, and expansions into emerging markets. We are committed to innovation and excellence as we continue to grow our international operations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default International;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Investors.jsx ====================
+
+import React from 'react';
+import './Investors.css'; // Import the custom CSS file
+
+const Investors = () => {
+  return (
+    <div className="container mt-4">
+      <h1 className="text-center mb-4 text-primary">Investor Information</h1>
+
+      {/* Overview Section */}
+      <section className="mb-5 p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Overview</h2>
+        <ul className="list-group">
+          <li className="list-group-item bg-info text-white">Financial Reports</li>
+          <li className="list-group-item bg-info text-white">Investor Information</li>
+          <li className="list-group-item bg-info text-white">Investor Communication</li>
+          <li className="list-group-item bg-info text-white">SEBI Disclosure</li>
+        </ul>
+      </section>
+
+      {/* Financial Reports Section */}
+      <section className="mb-5 p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Latest Financial Reports</h2>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <strong>Audited Financial Result for the year ended 31st March 2024</strong><br />
+            March 2024
+          </li>
+          <li className="list-group-item">
+            <strong>Financial Results for the Quarter ended 31st December 2023</strong><br />
+            December 2023
+          </li>
+          <li className="list-group-item">
+            <strong>32nd Annual Report 2023-24</strong><br />
+            July 2024
+          </li>
+        </ul>
+      </section>
+
+      {/* Important Investor Information Section */}
+      <section className="mb-5 p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Important Investor Information</h2>
+        <ul className="list-group">
+          <li className="list-group-item">Notice of Board Meetings</li>
+          <li className="list-group-item">Material Subsidiary Policy</li>
+        </ul>
+      </section>
+
+      {/* Contact Information Section */}
+      <section className="mb-5 p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Contact Information</h2>
+        <h3>Address For Communication</h3>
+        <address>
+          <p>"Chaitanya", No.12, Khader Nawaz Khan Road, Nungambakkam, Chennai - 600 006, Tamil Nadu, India.</p>
+          <p>Tel: 044 - 2833 2115</p>
+          <p>Fax: 044 - 2833 2113</p>
+          <p>CIN No: L35921TN1992PLC022845</p>
+          <p>Email: <a href="mailto:contactus@tvsmotor.com" className="text-primary">contactus@tvsmotor.com</a></p>
+          <p>Website: <a href="http://www.tvsmotor.com" target="_blank" rel="noopener noreferrer" className="text-primary">www.tvsmotor.com</a></p>
+        </address>
+      </section>
+
+      {/* Share Transfer Agent Section */}
+      <section className="mb-5 p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Details of Share Transfer Agent</h2>
+        <address>
+          <p>Integrated Registry Management Services Private Limited</p>
+          <p>Unit: TVS Motor Company Limited</p>
+          <p>2nd Floor, Kences Towers, No. 1, Ramakrishna Street, North Usman Road, T Nagar, Chennai-600 017</p>
+          <p>Tel: (044) 2814 0801-03</p>
+          <p>Fax: (044) 2814 2479</p>
+          <p>Email: <a href="mailto:corpserv@integratedindia.in" className="text-primary">corpserv@integratedindia.in</a>, <a href="mailto:srirams@integratedindia.in" className="text-primary">srirams@integratedindia.in</a></p>
+        </address>
+      </section>
+
+      {/* Nodal Officer Section */}
+      <section className="p-4 border rounded shadow-sm bg-light">
+        <h2 className="mb-3 text-success">Details of Nodal Officer</h2>
+        <p><strong>Mr K S Srinivasan</strong></p>
+        <p>Email: <a href="mailto:srinivasan.ks@tvsmotor.com" className="text-primary">srinivasan.ks@tvsmotor.com</a></p>
+      </section>
+    </div>
+  );
+};
+
+export default Investors;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Media.jsx ====================
+
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+const mediaItems = [
+  {
+    source: "kets.Ft",
+    date: "08 Mar 2024",
+    title: "TVS Motor Company - Now in France",
+    image: "Pictures/tvsbg.jpg" 
+  },
+  {
+    source: "EconomicTimes",
+    date: "05 Mar 2024",
+    title: "TVS Motor champions Children Safety with ‘Protect Little Riders Campaign’",
+    image: "Pictures/tvsbg.jpg" 
+  },
+  {
+    source: "TheNews",
+    date: "26 Feb 2024",
+    title: "TVS HLX Marks a Decade in International Markets; Becomes the Product of Choice of 3.5 Mn Customers",
+    image: "Pictures/tvsbg.jpg" 
+  },
+  {
+    source: "AutoCarpro",
+    date: "02 Feb 2024",
+    title: "TVS showcases R&D and tech prowess at Bharat Mobility Show, PM Modi visits pavilion",
+    image: "Pictures/tvsbg.jpg" 
+  },
+  {
+    source: "CnbcTV18",
+    date: "20 Jan 2024",
+    title: "DAKAR Rally 2024: TVS Racing Factory Racer Harith Noah Creates History; becomes the 1st Indian to win the Rally 2 Class and secure 11th Position Overall",
+    image: "Pictures/tvsbg.jpg" 
+  }
+];
+
+const Media = () => {
+    return (
+      <div className="container mt-5">
+        <h1 className="text-center mb-4">Media Coverage</h1>
+        <div className="row">
+          {mediaItems.map((item, index) => (
+            <div className="col-md-6 mb-4" key={index}>
+              <div className="media p-3 shadow-sm bg-white rounded">
+                <img
+                  src={item.image}
+                  className="mr-3 img-fluid rounded"
+                  alt={item.title}
+                  style={{ maxWidth: '100%', height: 'auto', objectFit: 'cover', transition: 'transform 0.3s ease' }} // Ensure image fits nicely
+                />
+                <div className="media-body">
+                  <h5 className="mt-0">{item.title}</h5>
+                  <p><strong>{item.source} | {item.date}</strong></p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+  
+        {/* Adding hover effect */}
+        <style>
+          {`
+            .media:hover {
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+              transform: scale(1.02);
+            }
+  
+            .media img {
+              cursor: pointer;
+            }
+          `}
+        </style>
+      </div>
+    );
+  };
+  
+  export default Media;
+
+--------------------------------------------------------------------------------
+
+==================== components/Navbar.jsx ====================
+
+import React from 'react';
+import { Link } from 'react-router-dom'
+
+const Navbar = () => {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">
+          <img src="logo/tvslogo.jpg" alt="TVS Logo" width="60" height="30" />
+        </a>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/aboutus">About Us</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/products">Our Products</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/services">Our Service</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/investors">Investors</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/sustainability">Sustainability</Link>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Shop
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="shopDropdown">
+                <li><a className="dropdown-item" href="https://shop.tvsmotor.com/" target="_blank">Accessories & Merchandise</a></li>
+                <li><a className="dropdown-item" href="https://www.advantagetvs.com/PartEcommerceUI/home?Type=Customer" target="_blank">Parts & Lubricants</a></li>
+              </ul>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/media">Media</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" aria-current="page" to="/international">International</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" to="/cart" aria-current="page">
+                <img src="logo/cart-icon.png" alt="Cart" width="40" height="30" />
+            </Link>
+            </li>
+            <li className="nav-item">
+            <Link className="nav-link" to="/userform" aria-current="page">
+              <img src="logo/profile-icon.png" alt="Profile" width="40" height="30" className="me-2" />
+            </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Products.jsx ====================
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Products = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [filteredVehicles, setFilteredVehicles] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/vehicles')
+      .then(response => {
+        setVehicles(response.data);
+        setFilteredVehicles(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory === 'All') {
+      setFilteredVehicles(vehicles);
+    } else {
+      const filtered = vehicles.filter(vehicle => {
+        // Ensure category comparison is case-insensitive
+        return vehicle.category.toLowerCase() === selectedCategory.toLowerCase();
+      });
+      setFilteredVehicles(filtered);
+    }
+  }, [selectedCategory, vehicles]);
+
+  return (
+    <div>
+      {/* Navbar for vehicle categories */}
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#!">TVS Motors</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('All')}>All</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Scooters')}>Scooters</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Motorcycles')}>Motorcycles</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Mopeds')}>Mopeds</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Electric')}>Electric</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#!" onClick={() => setSelectedCategory('Three Wheelers')}>Three Wheelers</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div className="container mt-5">
+        <h1 className="text-center mb-4">TVS Motors</h1>
+        <div className="row">
+          {filteredVehicles.map((vehicle, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className="card">
+                <img
+                  src={vehicle.image}
+                  className="card-img-top"
+                  alt={vehicle.name}
+                  style={{ maxHeight: '200px', objectFit: 'cover' }} // Ensures images fit nicely
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{vehicle.name}</h5>
+                  <table className="table">
+                    <tbody>
+                      {vehicle.engine && (
+                        <tr>
+                          <td><strong>Engine:</strong></td>
+                          <td>{vehicle.engine}</td>
+                        </tr>
+                      )}
+                      {vehicle.power && (
+                        <tr>
+                          <td><strong>Power:</strong></td>
+                          <td>{vehicle.power}</td>
+                        </tr>
+                      )}
+                      {vehicle.weight && (
+                        <tr>
+                          <td><strong>Weight:</strong></td>
+                          <td>{vehicle.weight}</td>
+                        </tr>
+                      )}
+                      {vehicle.price && (
+                        <tr>
+                          <td><strong>Price:</strong></td>
+                          <td>{vehicle.price}</td>
+                        </tr>
+                      )}
+                      {vehicle.category && (
+                        <tr>
+                          <td><strong>Category:</strong></td>
+                          <td>{vehicle.category}</td>
+                        </tr>
+                      )}
+                      {vehicle.range && (
+                        <tr>
+                          <td><strong>Range:</strong></td>
+                          <td>{vehicle.range}</td>
+                        </tr>
+                      )}
+                      {vehicle.batteryCapacity && (
+                        <tr>
+                          <td><strong>Battery Capacity:</strong></td>
+                          <td>{vehicle.batteryCapacity}</td>
+                        </tr>
+                      )}
+                      {vehicle.topSpeed && (
+                        <tr>
+                          <td><strong>Top Speed:</strong></td>
+                          <td>{vehicle.topSpeed}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Products;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Services.jsx ====================
+
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+
+const Services = () => {
+  return (
+    <div>
+      {/* Carousel Component */}
+      <div id="carouselExampleCaptions" className="carousel slide">
+        <div className="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div className="carousel-inner">
+          <div className="carousel-item">
+            <img src="Pictures/service3.jpg" className="d-block w-100" alt="Service 3" />
+          </div>
+          <div className="carousel-item active">
+            <img src="Pictures/service1.jpg" className="d-block w-100" alt="Service 1" />
+          </div>
+          <div className="carousel-item">
+            <img src="Pictures/service2.jpg" className="d-block w-100" alt="Service 2" />
+          </div>
+        </div>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      {/* Contact Section */}
+      <div className="container-fluid py-5">
+        <div className="bg-light p-4 rounded shadow-sm">
+          <div className="text-center mb-4">
+            <h3>Reach out to us for any service-related complaints or queries</h3>
+          </div>
+          <div className="text-center">
+            <div className="d-flex flex-column align-items-center">
+              <span className="mb-2">
+                <a href="tel:18002587111" className="text-decoration-none">
+                  <img src="logo/call.png" alt="Call Icon" style={{ width: '24px', height: '24px' }} className="me-2" />
+                  1800 258 7111
+                </a>
+              </span>
+              <p className="mb-2">OR</p>
+              <span>
+                <a href="mailto:customercare@tvsmotor.com" className="text-decoration-none">
+                  customercare@tvsmotor.com
+                </a>
+              </span>
+            </div>
+          </div>
+          <p className="text-center mt-4">For further details, please contact your nearest dealer.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Services;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Sustainability.jsx ====================
+
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+const sustainabilityItems = [
+  {
+    source: "EcoNews",
+    date: "10 Aug 2024",
+    title: "TVS Motors Launches Green Initiative for Sustainable Manufacturing",
+    image: "Pictures/tvsforest.jpg"
+  },
+  {
+    source: "GreenTimes",
+    date: "15 Jul 2024",
+    title: "TVS Partners with NGOs to Promote Electric Vehicles",
+    image: "Pictures/tvsforest.jpg"
+  },
+  {
+    source: "SustainabilityToday",
+    date: "22 Jun 2024",
+    title: "TVS Motors Achieves Zero-Waste Certification for Manufacturing Plants",
+    image: "Pictures/tvsforest.jpg"
+  }
+];
+
+const Sustainability = () => {
+  return (
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">Sustainability Initiatives</h1>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Title</th>
+            <th>Source</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sustainabilityItems.map((item, index) => (
+            <tr key={index}>
+              <td>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  style={{ width: '400px', height: '100px', objectFit: 'cover' }} // Adjust image size as needed
+                />
+              </td>
+              <td>{item.title}</td>
+              <td>{item.source}</td>
+              <td>{item.date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Adding hover effect */}
+      <style>
+        {`
+          .table tbody tr:hover {
+            background-color: #f1f1f1;
+          }
+
+          .table img {
+            transition: transform 0.3s ease;
+          }
+
+          .table img:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+          }
+        `}
+      </style>
+    </div>
+  );
+};
+
+export default Sustainability;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/UserForm.jsx ====================
+
+import React from 'react';
+
+const UserForm = () => {
+    const [user, setUser] = React.useState("");
+    const [pass, setPass] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [phone, setPhone] = React.useState("");
+    const [userError, setUserError] = React.useState(false);
+    const [passError, setPassError] = React.useState(false);
+    const [emailError, setEmailError] = React.useState(false);
+    const [phoneError, setPhoneError] = React.useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (userError || passError || emailError || phoneError) {
+            alert("Please correct the errors before submitting the form.");
+        } else {
+            alert("Form Submitted Successfully");
+            console.log("Form Submitted");
+        }
+    };
+
+    const userHandleChange = (e) => {
+        let u = e.target.value;
+        if (u.length > 4) {
+            setUser(u);
+            setUserError(false);
+        } else {
+            setUserError(true);
+        }
+    };
+
+    const passwordHandleChange = (e) => {
+        let p = e.target.value;
+        if (p.length > 4) {
+            setPass(p);
+            setPassError(false);
+        } else {
+            setPassError(true);
+        }
+    };
+
+    const emailHandleChange = (e) => {
+        let em = e.target.value;
+        if (RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$").test(em)) {
+            setEmail(em);
+            setEmailError(false);
+        } else {
+            setEmailError(true);
+        }
+    };
+
+    const phoneHandleChange = (e) => {
+        let ph = e.target.value;
+        if (RegExp("^[0-9]{10}$").test(ph)) {
+            setPhone(ph);
+            setPhoneError(false);
+        } else {
+            setPhoneError(true);
+        }
+    };
+
+    return (
+        <div className="container mt-5 col-md-6 offset-md-3">
+            <h1 className="text-center mb-4">Customer Sign Up</h1>
+            <form onSubmit={handleSubmit} className="bg-light p-5 rounded shadow">
+                <div className="mb-3">
+                    <label htmlFor="user" className="form-label">User Name</label>
+                    <input
+                        type="text"
+                        className={`form-control ${userError ? 'is-invalid' : ''}`}
+                        id="user"
+                        placeholder="Enter User Name"
+                        onChange={userHandleChange}
+                        autoComplete='off'
+                    />
+                    {userError && <div className="invalid-feedback">User name should be more than 4 characters</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="pass" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        className={`form-control ${passError ? 'is-invalid' : ''}`}
+                        id="pass"
+                        placeholder="Enter Password"
+                        onChange={passwordHandleChange}
+                        autoComplete='off'
+                    />
+                    {passError && <div className="invalid-feedback">Password should be more than 4 characters</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input
+                        type="email"
+                        className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                        id="email"
+                        placeholder="Enter Email"
+                        onChange={emailHandleChange}
+                        autoComplete='off'
+                    />
+                    {emailError && <div className="invalid-feedback">Email should be in the correct format</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="phone" className="form-label">Phone</label>
+                    <input
+                        type="tel"
+                        className={`form-control ${phoneError ? 'is-invalid' : ''}`}
+                        id="phone"
+                        placeholder="Enter Phone Number"
+                        onChange={phoneHandleChange}
+                        autoComplete='off'
+                    />
+                    {phoneError && <div className="invalid-feedback">Phone number should be 10 digits</div>}
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    );
+}
+
+export default UserForm;
+
+
+--------------------------------------------------------------------------------
+

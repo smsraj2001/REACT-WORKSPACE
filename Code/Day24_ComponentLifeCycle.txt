@@ -1,0 +1,101 @@
+==================== App.js ====================
+
+import React, { Component } from 'react'
+import VehicleComponent from './VehicleComponent'
+
+export class App extends Component {
+  constructor()
+  {
+      super();
+      console.log("Constructor Called")
+      this.state = {show : true}
+  }
+
+  componentDidMount()
+  {
+      console.log("Component Did Mount Called")
+  }
+  render() {
+    console.log("Render is Called")
+    return (
+      <div>
+        <h1>App</h1>
+        {this.state.show ? <VehicleComponent/> : null}
+        <button onClick={() => this.setState({show : !this.state.show})}>Toggle</button>
+        {/* <button onClick={() => this.state.show : !this.state.show}>Toggle</button> */}
+      </div>
+    )
+  }
+}
+
+export default App
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== VehicleComponent.jsx ====================
+
+import React, { Component } from 'react'
+
+export default class VehicleComponent extends Component {
+    componentWillUnmount()
+    {
+        console.log("Component Will Unmount Called")
+    }
+    // constructor()
+    // {
+    //     super();
+    //     console.log("Constructor Called")
+    // }
+
+    // componentDidMount()
+    // {
+    //     console.log("Component Did Mount Called")
+    // }
+  render() {
+
+    return (
+      <div>
+        <h1>Vehicle Component</h1>
+      </div>
+    )
+  }
+}
+
+--------------------------------------------------------------------------------

@@ -1,0 +1,96 @@
+==================== App.js ====================
+
+import logo from './logo.svg';
+import './App.css';
+import Counter from './components/Counter';
+
+function App() {
+  return (
+    <div className="App">
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Counter.js ====================
+
+import React from 'react'
+import { useState } from 'react';
+import { useEffect } from 'react'
+import axios from 'axios'
+
+const Counter = () => {
+    const[num1, setNum1] = useState(0);
+    const[num2, setNum2] = useState(0);
+    const[num3, setNum3] = useState(0);
+    const[post, setPost] = useState('');
+    useEffect( () => {
+                setTimeout(() => {
+                    setNum1( (num1) => num1 + 1)
+                    setNum2( (num2) => num2 + 1)
+                }, 1000)
+                
+
+    }, [num1, num2] );
+
+    useEffect( () => {
+        axios.get("https://jsonplaceholder.typicode.com/posts/1")
+        .then( (response) => setPost(response.data));
+    })
+  return (
+    <div>
+        <p>Value of Num1: {num1}</p>
+        <p>Value of Num2: {num2}</p>
+
+        <p>Value of Post: {post.id} {post.title} {post.body}</p>
+
+    </div>
+  )
+}
+
+export default Counter
+
+--------------------------------------------------------------------------------
+

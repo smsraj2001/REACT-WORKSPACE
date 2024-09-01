@@ -1,0 +1,205 @@
+==================== App.js ====================
+
+import logo from './logo.svg';
+import './App.css';
+import Vehicle from './Vehicle';
+import React from 'react'
+
+function App() {
+
+  const[msg, setMsg] = React.useState("");
+  const[msg2, setMsg2] = React.useState("");
+  const[msg3, setMsg3] = React.useState(""); // This is the parent input value
+
+  let display = () =>
+  {
+    alert("I am parent alert component.");
+  }
+
+  let display2 = (data) =>
+  {
+    setMsg(data);
+  }
+
+  let display3 = (data) =>
+  {
+    setMsg2(data);
+  }
+
+  let handleChange = (e) =>
+  {
+    setMsg3(e.target.value); // Update parent input value
+  }
+
+  return (
+    <div className="App bg-danger text-white p-4">
+      <h1 className="mb-4">App Component -- Parent Component</h1>
+      <input 
+        type="text" 
+        className="form-control mb-3"
+        onChange={handleChange} 
+        placeholder="See dynamic text in Child"
+      />
+      <p className="bg-light text-dark p-2 rounded">Value of message: {msg}</p>
+      <p className="bg-light text-dark p-2 rounded">Value of input bar of child: {msg2}</p>
+      <Vehicle 
+        callalert={display} 
+        name="sutharsan" 
+        calldata={display2} 
+        callinput={display3} 
+        text={msg3} 
+        input3={msg3} 
+      />
+    </div>
+  );
+}
+
+export default App;
+
+// {
+// import logo from './logo.svg';
+// import './App.css';
+// import Vehicle from './Vehicle';
+// import React from 'react'
+
+// function App() {
+
+//   const[msg, setMsg] = React.useState("");
+//   const[msg2, setMsg2] = React.useState("");
+//   const[msg3, setMsg3] = React.useState(""); // This is the parent input value
+
+//   let display = () =>
+//   {
+//     alert("I am parent alert component.");
+//   }
+
+//   let display2 = (data) =>
+//   {
+//     setMsg(data);
+//   }
+
+//   let display3 = (data) =>
+//   {
+//     setMsg2(data);
+//   }
+
+//   let handleChange = (e) =>
+//   {
+//     setMsg3(e.target.value); // Update parent input value
+//   }
+
+//   return (
+//     <div className="App" style = {{backgroundColor : "red"}}>
+//       <h1>App Component -- Parent Component</h1>
+//       <input type = "text" onChange = {handleChange} placeholder='See dynamic text in Child'/>
+//       <p>Value of message: {msg}</p>
+//       <p>Value of input bar of child: {msg2}</p>
+//       <Vehicle callalert = {display} name = "sutharsan" calldata = {display2} callinput = {display3} text={msg3} input3 = {msg3}/>
+//     </div>
+//   );
+// }
+
+// export default App;
+// }
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== Vehicle.jsx ====================
+
+import React from 'react'
+
+const Vehicle = (props) => {
+  let data = "Hello World, TVS vehicle in child";
+return (
+  <div className="bg-warning text-dark p-4 rounded">
+      <h1 className="mb-4">Vehicle Component -- Child Component</h1>
+
+      <button className="btn btn-primary mb-3 me-2" onClick={props.callalert}>
+        Click Me in Child -- Call Alert
+      </button>
+      <button className="btn btn-secondary mb-3" onClick={() => props.calldata(data)}>
+        Click Me in Child -- Send Data
+      </button>
+      <br />
+      <input 
+        type="text" 
+        className="form-control mb-3" 
+        onChange={(e) => props.callinput(e.target.value)}
+        placeholder="See dynamic text in Parent"
+      />
+
+      <p className="bg-light text-dark p-2 rounded">Value from parent: {props.name}</p>
+      <p className="bg-light text-dark p-2 rounded">Value of input bar of parent by props.text: {props.text}</p> {/* Display parent input value here */}
+      <p className="bg-light text-dark p-2 rounded">Value of input bar of parent by variable name: {props.input3}</p> {/* Display parent input value here */}
+  </div>
+)
+}
+
+export default Vehicle;
+
+// {
+//   import React from 'react'
+
+// const Vehicle = (props) => {
+//     let data = "Hello World, TVS vehicle in child";
+//   return (
+//     <div style = {{backgroundColor : "yellow"}}>
+//         <h1>Vehicle Component -- Child Component</h1>
+
+//         <button onClick={props.callalert}>Click Me in Child -- Call Alert</button>
+//         <button onClick={() => props.calldata(data)}>Click Me in Child -- Send Data</button>
+//         <br />
+//         <input type = "text"
+//         onChange = {(e) => props.callinput(e.target.value)}
+//         placeholder='See dynamic text in Parent'
+//         />
+
+//         <p>Value from parent: {props.name}</p>
+//         <p>Value of input bar of parent by props.text: {props.text} </p> {/* Display parent input value here */}
+//         <p>Value of input bar of parent by variable name: {props.input3} </p> {/* Display parent input value here */}
+//     </div>
+//   )
+// }
+
+// export default Vehicle;
+// }
+
+--------------------------------------------------------------------------------

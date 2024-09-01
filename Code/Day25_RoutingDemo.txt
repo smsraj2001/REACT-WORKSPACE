@@ -1,0 +1,128 @@
+==================== App.js ====================
+
+import logo from './logo.svg';
+import './App.css';
+import Home from './components/Home'
+import {Route, Routes} from "react-router-dom"
+import ContactUs from './components/ContactUs';
+import AboutUs from './components/AboutUs';
+
+function App() {
+  return (
+    <div className="App">
+      {/* <h1> Routing Demo</h1>
+      {console.log("Routing Demo")} */}
+
+      <Routes>
+        <Route path = "/" element = {<Home />} /> {/* Default path */}
+        {/* In the URL append /home, then the component will come. */}
+        {/* <Route path = "/home" element = {<Home />} />  */}
+        <Route path = "/contactus" element = {<ContactUs />} />
+        <Route path = "/aboutus" element = {<AboutUs />} />
+      </Routes>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom'
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/AboutUs.js ====================
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const AboutUs = () => {
+  return (
+    <div>
+        <h1>About Us Component</h1>
+        <Link to = "/">Go to Home</Link>
+    </div>
+  )
+}
+
+export default AboutUs
+
+--------------------------------------------------------------------------------
+
+==================== components/ContactUs.js ====================
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const ContactUs = () => {
+  return (
+    <div>
+        <h1> Contact Us Component </h1>
+        <Link to = "/">Go to Home</Link>
+    </div>
+  )
+}
+
+export default ContactUs
+
+--------------------------------------------------------------------------------
+
+==================== components/Home.js ====================
+
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const Home = () => {
+  return (
+    <div>
+        <h1> Home Component </h1>
+
+        <Link to = "aboutus">About Us</Link>
+        <br />
+        <Link to = "contactus">Contact Us</Link>
+
+    </div>
+  )
+}
+
+export default Home
+
+--------------------------------------------------------------------------------
+

@@ -1,0 +1,284 @@
+==================== App.js ====================
+
+import logo from './logo.svg';
+import './App.css';
+import HeaderComponent from './components/HeaderComponent';
+import UserForm from './components/UserForm';
+import FooterComponent from './components/FooterComponent';
+
+function App() {
+  return (
+    <div className="App">
+      <HeaderComponent />
+      <UserForm />
+      <FooterComponent />
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/FooterComponent.jsx ====================
+
+import React from 'react';
+import './FooterComponent.css'; // Ensure the CSS file is properly imported
+
+const FooterComponent = () => {
+  return (
+    <div id="footer" className="bgfooter">
+      <div className="container">
+        <div className="row footer-content">
+          {/* Reach Us Section */}
+          <div className="col-md-4 footer-section">
+            <h3>Reach Us</h3>
+            <p>
+              <strong className="text-primary">TVS Motor Email:</strong> 
+              <a href="mailto:customercare@tvsmotor.com" className="text-light">
+                customercare@tvsmotor.com
+              </a>
+            </p>
+            <p>
+              <strong className="text-primary">TVS Motor Call:</strong> 
+              <a href="tel:18002587555" className="text-light">
+                18002587555
+              </a>
+            </p>
+          </div>
+
+          {/* Follow Us Section */}
+          <div className="col-md-4 footer-section text-center">
+            <h3>Follow Us</h3>
+            <a href="https://in.linkedin.com/company/tvs-motor-company" title="LinkedIn" className="mx-2">
+              <img src="logo/linkedin.png" alt="LinkedIn" className="footer-icon" />
+            </a>
+            <a href="https://www.youtube.com/@tvsmotorcompany" title="YouTube" className="mx-2">
+              <img src="logo/youtube.png" alt="YouTube" className="footer-icon" />
+            </a>
+            <a href="https://www.facebook.com/tvsmotorcompany/" title="Facebook" className="mx-2">
+              <img src="logo/facebook.png" alt="Facebook" className="footer-icon" />
+            </a>
+            <a href="https://www.instagram.com/tvsmotorcompany/?hl=en" title="Instagram" className="mx-2">
+              <img src="logo/instagram.png" alt="Instagram" className="footer-icon" />
+            </a>
+            <a href="https://twitter.com/tvsmotorcompany?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" title="Twitter" className="mx-2">
+              <img src="logo/x.png" alt="Twitter" className="footer-icon" />
+            </a>
+          </div>
+
+          {/* Legal Section */}
+          <div className="col-md-4 footer-section">
+            <div className="legal-text">
+              <p>© TVS Motor Company. All Rights Reserved</p>
+              <div className="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span className="separator">|</span>
+                <a href="#">Disclaimer</a>
+                <span className="separator">|</span>
+                <a href="#">Cookie Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FooterComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/HeaderComponent.jsx ====================
+
+import React from 'react';
+import './HeaderComponent.css';
+
+const HeaderComponent = () => {
+  return (
+    <div className="container-fluid bgheader">
+      <div id="heading" className="d-flex align-items-center">
+        <h1 className="mx-auto">TVS MOTOR COMPANY LIMITED</h1>
+        <img src="/logo/tvslogo.jpg" alt="TVS Motors" className="imgfloat" width="100px" height="50px" />
+      </div>
+    </div>
+  );
+};
+
+export default HeaderComponent;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/UserForm.jsx ====================
+
+import React from 'react';
+
+const UserForm = () => {
+    const [user, setUser] = React.useState("");
+    const [pass, setPass] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [phone, setPhone] = React.useState("");
+    const [userError, setUserError] = React.useState(false);
+    const [passError, setPassError] = React.useState(false);
+    const [emailError, setEmailError] = React.useState(false);
+    const [phoneError, setPhoneError] = React.useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (userError || passError || emailError || phoneError) {
+            alert("Please correct the errors before submitting the form.");
+        } else {
+            alert("Form Submitted Successfully");
+            console.log("Form Submitted");
+        }
+    };
+
+    const userHandleChange = (e) => {
+        let u = e.target.value;
+        if (u.length > 4) {
+            setUser(u);
+            setUserError(false);
+        } else {
+            setUserError(true);
+        }
+    };
+
+    const passwordHandleChange = (e) => {
+        let p = e.target.value;
+        if (p.length > 4) {
+            setPass(p);
+            setPassError(false);
+        } else {
+            setPassError(true);
+        }
+    };
+
+    const emailHandleChange = (e) => {
+        let em = e.target.value;
+        if (RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$").test(em)) {
+            setEmail(em);
+            setEmailError(false);
+        } else {
+            setEmailError(true);
+        }
+    };
+
+    const phoneHandleChange = (e) => {
+        let ph = e.target.value;
+        if (RegExp("^[0-9]{10}$").test(ph)) {
+            setPhone(ph);
+            setPhoneError(false);
+        } else {
+            setPhoneError(true);
+        }
+    };
+
+    return (
+        <div className="container mt-5 col-md-6 offset-md-3">
+            <h1 className="text-center mb-4">User Form</h1>
+            <form onSubmit={handleSubmit} className="bg-light p-5 rounded shadow">
+                <div className="mb-3">
+                    <label htmlFor="user" className="form-label">User Name</label>
+                    <input
+                        type="text"
+                        className={`form-control ${userError ? 'is-invalid' : ''}`}
+                        id="user"
+                        placeholder="Enter User Name"
+                        onChange={userHandleChange}
+                        autoComplete='off'
+                    />
+                    {userError && <div className="invalid-feedback">User name should be more than 4 characters</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="pass" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        className={`form-control ${passError ? 'is-invalid' : ''}`}
+                        id="pass"
+                        placeholder="Enter Password"
+                        onChange={passwordHandleChange}
+                        autoComplete='off'
+                    />
+                    {passError && <div className="invalid-feedback">Password should be more than 4 characters</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input
+                        type="email"
+                        className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                        id="email"
+                        placeholder="Enter Email"
+                        onChange={emailHandleChange}
+                        autoComplete='off'
+                    />
+                    {emailError && <div className="invalid-feedback">Email should be in the correct format</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="phone" className="form-label">Phone</label>
+                    <input
+                        type="tel"
+                        className={`form-control ${phoneError ? 'is-invalid' : ''}`}
+                        id="phone"
+                        placeholder="Enter Phone Number"
+                        onChange={phoneHandleChange}
+                        autoComplete='off'
+                    />
+                    {phoneError && <div className="invalid-feedback">Phone number should be 10 digits</div>}
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    );
+}
+
+export default UserForm;
+
+
+--------------------------------------------------------------------------------
+

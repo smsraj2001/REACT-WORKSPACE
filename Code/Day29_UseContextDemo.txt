@@ -1,0 +1,105 @@
+==================== App.js ====================
+
+import './App.css';
+import { createContext, useState } from 'react';
+import Vehicle from './components/Vehicle';
+import Inventory from './components/Inventory';
+
+export const UserContext = createContext(); // Global Storage
+
+function App() {
+
+  const [user, setUser] = useState("Sachin")
+  return (
+    <div className="App">
+      <UserContext.Provider value={user}>
+      <Vehicle />
+      <Inventory />
+      </UserContext.Provider>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Inventory.jsx ====================
+
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+
+const Inventory = () => {
+    let u = useContext(UserContext)
+  return (
+    <div style={{backgroundColor: "yellow"}}>
+        <h1> This is Inventory Component </h1>
+        <p>Value of the user component is <mark color='lightblue'>{u}</mark></p>
+    </div>
+  )
+}
+
+export default Inventory
+
+--------------------------------------------------------------------------------
+
+==================== components/Vehicle.jsx ====================
+
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+
+const Vehicle = () => {
+    const u = useContext(UserContext)
+  return (
+    <div>
+        <h1>This is Vehicle Component</h1>
+        <p>Value of the user component is <mark>{u}</mark></p>
+    </div>
+  )
+}
+
+export default Vehicle
+
+--------------------------------------------------------------------------------
+
