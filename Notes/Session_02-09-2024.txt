@@ -1,0 +1,13 @@
+Redux Task:
+-----------
+const dispatch = useDispatch(); 
+const counter = useSelector({state} => state);
+
+
+useDispatch:
+------------
+It calls the actions.
+
+useSelector:
+------------
+It calls the state from the store.

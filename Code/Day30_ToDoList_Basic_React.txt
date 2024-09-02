@@ -1,0 +1,314 @@
+==================== App.jsx ====================
+
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import Form from "./components/Form";
+import FilterButton from "./components/FilterButton";
+import Todo from "./components/Todo";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "./App.css";
+
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed,
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("All");
+
+  const listHeadingRef = useRef(null);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = () => {
+    axios
+      .get("http://localhost:3000/tasks")
+      .then((response) => setTasks(response.data))
+      .catch((error) => console.error("Error fetching tasks:", error));
+  };
+
+  const addTask = (name) => {
+    const newTask = { name, completed: false };
+    axios
+      .post("http://localhost:3000/tasks", newTask)
+      .then((response) => setTasks([...tasks, response.data]))
+      .catch((error) => console.error("Error adding task:", error));
+  };
+
+  const toggleTaskCompleted = (id) => {
+    const taskToUpdate = tasks.find((task) => task.id === id);
+    if (taskToUpdate) {
+      axios
+        .patch(`http://localhost:3000/tasks/${id}`, {
+          completed: !taskToUpdate.completed,
+        })
+        .then((response) => {
+          setTasks(
+            tasks.map((task) =>
+              task.id === id ? response.data : task
+            )
+          );
+        })
+        .catch((error) => console.error("Error updating task:", error));
+    }
+  };
+
+  const deleteTask = (id) => {
+    axios
+      .delete(`http://localhost:3000/tasks/${id}`)
+      .then(() => {
+        setTasks(tasks.filter((task) => task.id !== id));
+      })
+      .catch((error) => console.error("Error deleting task:", error));
+  };
+
+  const editTask = (id, newName) => {
+    axios
+      .patch(`http://localhost:3000/tasks/${id}`, { name: newName })
+      .then((response) => {
+        setTasks(
+          tasks.map((task) =>
+            task.id === id ? response.data : task
+          )
+        );
+      })
+      .catch((error) => console.error("Error editing task:", error));
+  };
+
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map((task) => (
+      <Todo
+        key={task.id}
+        id={task.id}
+        name={task.name}
+        completed={task.completed}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    ));
+
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton
+      key={name}
+      name={name}
+      isPressed={name === filter}
+      setFilter={setFilter}
+    />
+  ));
+
+  const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+
+  return (
+    <div className="container py-5">
+      <div className="card shadow-sm">
+        <div className="card-body">
+          <h1 className="card-title text-center mb-4">Todo App</h1>
+          <Form addTask={addTask} />
+          <div className="mb-4 d-flex justify-content-center">
+            {filterList}
+          </div>
+          <h2
+            id="list-heading"
+            tabIndex="-1"
+            ref={listHeadingRef}
+            className="h5 text-center mb-4"
+          >
+            {headingText}
+          </h2>
+          <ul className="list-group">{taskList}</ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/FilterButton.jsx ====================
+
+import React from "react";
+
+const FilterButton = ({ name, isPressed, setFilter }) => {
+  return (
+    <button
+      type="button"
+      className={`btn btn-outline-primary me-2 ${isPressed ? "active" : ""}`}
+      aria-pressed={isPressed}
+      onClick={() => setFilter(name)}
+    >
+      {name}
+    </button>
+  );
+};
+
+export default FilterButton;
+
+--------------------------------------------------------------------------------
+
+==================== components/Form.jsx ====================
+
+import React, { useState } from "react";
+
+const Form = ({ addTask }) => {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (name.trim() === "") {
+      alert("Please enter a task.");
+      return;
+    }
+
+    addTask(name);
+    setName("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-4">
+      <div className="mb-3">
+        <label htmlFor="new-todo-input" className="form-label fw-bold">
+          What needs to be done?
+        </label>
+        <input
+          type="text"
+          id="new-todo-input"
+          className="form-control"
+          name="text"
+          autoComplete="off"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter task name"
+        />
+      </div>
+      <button type="submit" className="btn btn-primary">
+        Add Task
+      </button>
+    </form>
+  );
+};
+
+export default Form;
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Todo.jsx ====================
+
+import React, { useEffect, useRef, useState } from "react";
+
+const Todo = ({ id, name, completed, toggleTaskCompleted, deleteTask, editTask }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState(name);
+
+    const editFieldRef = useRef(null);
+    const editButtonRef = useRef(null);
+
+    useEffect(() => {
+        if (isEditing) {
+            editFieldRef.current.focus();
+        }
+    }, [isEditing]);
+
+    const handleChange = (e) => {
+        setNewName(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (newName.trim() === "") {
+            alert("Please enter a task name.");
+            return;
+        }
+        editTask(id, newName);
+        setIsEditing(false);
+    };
+
+    const viewTemplate = (
+        <div className="d-flex justify-content-between align-items-center py-2 border-bottom">
+            <div className="form-check">
+                <input
+                    id={id}
+                    type="checkbox"
+                    className="form-check-input"
+                    checked={completed}
+                    onChange={() => toggleTaskCompleted(id)}
+                />
+                <label htmlFor={id} className={`form-check-label ${completed ? "text-decoration-line-through" : ""}`}>
+                    {name}
+                </label>
+            </div>
+            <div>
+                <button
+                    type="button"
+                    className="btn btn-sm btn-outline-secondary me-2"
+                    onClick={() => setIsEditing(true)}
+                    ref={editButtonRef}
+                >
+                    Edit
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-sm btn-outline-danger"
+                    onClick={() => deleteTask(id)}
+                >
+                    Delete
+                </button>
+            </div>
+        </div>
+    );
+
+    const editingTemplate = (
+        <form className="py-2 border-bottom" onSubmit={handleSubmit}>
+            <div className="row g-2 align-items-center">
+                <div className="col">
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={newName}
+                        onChange={handleChange}
+                        ref={editFieldRef}
+                    />
+                </div>
+                <div className="col-auto">
+                    <button type="submit" className="btn btn-primary">
+                        Save
+                    </button>
+                </div>
+                <div className="col-auto">
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => {
+                            setIsEditing(false);
+                            setNewName(name);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    );
+
+    return <li className="list-group-item">{isEditing ? editingTemplate : viewTemplate}</li>;
+};
+
+export default Todo;
+
+
+--------------------------------------------------------------------------------
+
