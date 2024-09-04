@@ -1,0 +1,67 @@
+/* Navbar Styles */
+.navbar {
+    border-bottom: 2px solid #ddd;
+    background-color: #f8f9fa; /* Light grey background */
+  }
+  
+  .brand-logo {
+    height: 24px;
+    width: auto;
+  }
+  
+  .navbar-toggler-icon {
+    background-color: #333; /* Darker color for the toggler icon */
+  }
+  
+  .navbar-nav .nav-link {
+    color: #555;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #007bff;
+  }
+  
+  .navbar-nav .icon {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-item {
+    margin-left: 15px;
+  }
+  
+  /* Styling for dropdown items */
+  .dropdown-menu {
+    background-color: #f8f9fa; /* Match navbar background */
+    border-radius: 0;
+  }
+  
+  .dropdown-item {
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .dropdown-item:hover {
+    color: #007bff;
+    background-color: transparent;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .navbar-nav {
+      flex-direction: column;
+    }
+  
+    .nav-item {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+  }
+  

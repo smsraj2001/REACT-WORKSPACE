@@ -1,0 +1,36 @@
+React Unit Testing:
+--------------------
+
+Unit Testing:
+-------------
+    It will be done by the developer.
+
+react js comes with built in test libraries.
+jest ---> It comes by default.
+enzyme
+
+===========================================================================================================
+
+screen.getByText(): Gets the App component by text in the App.js file.
+screen.getByText(/learn react/i): i signifies case insensitive
+
+Test Suite: means number of test files.
+Test: Means total number of tests performed.
+
+test() : It will take 2 parameters: Name of test and a function implementation of the same
+
+Either like this
+  const [getByTestId] = render(<Vehicle />);
+  const userId = getByTestId("user");
+
+  OR
+
+  render(<Vehicle />);
+  const userId = screen.getByTestId("user");
+
+===========================================================================================================
+
+enzyme
+
+===========================================================================================================
+

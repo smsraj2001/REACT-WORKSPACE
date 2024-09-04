@@ -1,0 +1,220 @@
+==================== App.js ====================
+
+import './App.css';
+import Counter from './components/Counter';
+import Vehicle from './components/Vehicle';
+
+function App() {
+  return (
+    <div className = "App">
+      {/* Hello World */}
+      learn react
+
+      <Vehicle />
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+
+
+--------------------------------------------------------------------------------
+
+==================== App.test.js ====================
+
+import { render, screen } from '@testing-library/react';
+import App from './App';
+import Vehicle from './components/Vehicle';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const someText = screen.getByText(/learn react/i);
+  expect(someText).toBeInTheDocument();
+});
+
+test('Vehicle Paragraph Test', () => {
+  render(<Vehicle />);
+  const para = screen.getByTestId("para1");
+  expect(para).toBeInTheDocument();
+})
+
+test('Vehicle Paragraph Text Test', () => {
+  render(<Vehicle />);
+  const para = screen.getByTestId("para1");
+  expect(para).toHaveTextContent(/this is para/i)
+})
+
+test("UserName Placeholder", () => {
+  render(<Vehicle />);
+  const userId = screen.getByTestId("user");
+  const placeholdertext = screen.getByPlaceholderText("UserName");
+
+  expect(userId).toBeInTheDocument();
+  expect(placeholdertext).toBeInTheDocument();
+})
+
+--------------------------------------------------------------------------------
+
+==================== index.js ====================
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+--------------------------------------------------------------------------------
+
+==================== components/Counter.jsx ====================
+
+import React, { useState } from 'react'
+
+const Counter = () => {
+    const[count, setCount] = useState(0);
+    let increment = () =>
+    {
+        setCount(count + 1);
+    }
+    let decrement = () =>
+    {
+        setCount(count - 1);
+    }
+  return (
+
+    <div>
+        <p data-testid = "counter">{count}</p>
+        <button data-testId = "inc" onClick={increment}>Increment</button>
+        <button data-testId = "dec" onClick={decrement}>Decrement</button>
+    </div>
+  )
+}
+
+export default Counter
+
+--------------------------------------------------------------------------------
+
+==================== components/Counter.test.js ====================
+
+import { fireEvent, render, screen } from '@testing-library/react';
+import Counter from './Counter';
+
+test('Test for Initial Counter Value', () => 
+{
+    render(<Counter />);
+    // const counter = screen.getByTestId("counter");
+    // const countertext = screen.getByText('0');
+    // expect(counter).toBeInTheDocument();
+
+    const counter = screen.getByTestId("counter");
+    expect(counter).toHaveTextContent('0');
+    expect(counter).toBeInTheDocument();
+
+})
+
+test("Test for Increment", () =>
+{
+    render(<Counter />);
+    const counter = screen.getByTestId('counter');
+    const incButton = screen.getByTestId('inc');
+
+    expect(counter).toHaveTextContent('0');
+
+    fireEvent.click(incButton);
+    expect(counter).toHaveTextContent('1');
+
+    fireEvent.click(incButton);
+    expect(counter).toHaveTextContent('2');
+})
+
+test("Test for Decrement", () =>
+    {
+        render(<Counter />);
+        const counter = screen.getByTestId('counter');
+        const decButton = screen.getByTestId('dec');
+    
+        expect(counter).toHaveTextContent('0');
+    
+        fireEvent.click(decButton);
+        expect(counter).toHaveTextContent('-1');
+    })
+
+--------------------------------------------------------------------------------
+
+==================== components/Vehicle.jsx ====================
+
+import React, { useState } from 'react'
+
+const Vehicle = () => {
+    const[data, setData] = useState("Hello");
+
+    let handleSubmit = (e) => {
+        e.preventDefault();
+    };
+  return (
+    <div style = {{backgroundColor : "pink"}}>
+        This is Vehicle
+        <p data-testid = "para1">this is para</p>
+
+        <form onSubmit={handleSubmit}>
+            <input type = "text"
+             data-testid = "user" 
+             id = "user"
+             name = "user"
+             placeholder='UserName'
+             value = {data}
+             onChange={(e) => setData(e.target.value)}
+            />
+            <br />
+            <input type = "submit"
+             />
+        </form>
+    </div>
+  )
+}
+
+export default Vehicle
+
+--------------------------------------------------------------------------------
+
+==================== components/Calculation.jsx ====================
+
+export let add = (a, b) =>
+{
+    return a + b;
+}
+
+export let sub = (a, b) =>
+{
+    return a - b;
+}
+
+--------------------------------------------------------------------------------
+
+==================== components/Calculation.test.js ====================
+
+import { add, sub } from "./Calculation"
+
+test('Add Test', () => { 
+    expect(add(1, 1)).toBe(2);
+
+})
+
+test('Subtract Test', () => {
+    expect(sub(1, 1)).toBe(0);
+})
+
+--------------------------------------------------------------------------------
