@@ -1,0 +1,76 @@
+{
+  "vehicles": [
+    {
+      "id": "1",
+      "model": "TVS Apache",
+      "type": "Motorcycles",
+      "price": "₹2,49,000"
+    },
+    {
+      "id": "2",
+      "model": "TVS Jupiter",
+      "type": "Scooters",
+      "price": "₹79,299"
+    },
+    {
+      "id": "3",
+      "model": "TVS NTorq",
+      "type": "Scooters",
+      "price": "₹89,641"
+    },
+    {
+      "id": "4",
+      "model": "TVS Raider",
+      "type": "Motorcycles",
+      "price": "₹94,000"
+    },
+    {
+      "id": "5",
+      "model": "TVS IQube",
+      "type": "Electric",
+      "price": "₹84,999"
+    },
+    {
+      "id": "6",
+      "model": "TVS X",
+      "type": "Electric",
+      "price": "₹2,49,000"
+    },
+    {
+      "id": "7",
+      "model": "TVS King Deluxe",
+      "type": "Three Wheelers",
+      "price": "₹1,74,999"
+    },
+    {
+      "id": "8",
+      "model": "TVS King Cargo",
+      "type": "Three Wheelers",
+      "price": "₹1,80,000"
+    },
+    {
+      "id": "9",
+      "model": "TVS Jupiter",
+      "type": "Scooters",
+      "price": "₹73,700"
+    },
+    {
+      "id": "10",
+      "model": "TVS Zest",
+      "type": "Scooters",
+      "price": "₹74,476"
+    },
+    {
+      "id": "11",
+      "model": "TVS Scooty Pep+",
+      "type": "Scooters",
+      "price": "₹65,514"
+    },
+    {
+      "id": "12",
+      "model": "TVS XL100",
+      "type": "Mopeds",
+      "price": "₹44,999"
+    }
+  ]
+}
